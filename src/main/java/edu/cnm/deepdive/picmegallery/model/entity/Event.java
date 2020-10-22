@@ -22,14 +22,18 @@ public class Event {
   @Column(name = "event_id", nullable = false, updatable = false)
   private Long id;
 
+  @NonNull
+  @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 
   private Double latitude;
 
   private Double longitude;
 
+  @Column(name = "event_name",nullable = false, updatable = true)
   private String eventName;
 
+ @Column(nullable = false, updatable = true)
   private String password;
 
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
