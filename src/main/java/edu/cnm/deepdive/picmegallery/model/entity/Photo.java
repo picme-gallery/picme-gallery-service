@@ -16,11 +16,15 @@ import org.springframework.lang.NonNull;
 @Entity
 public class Photo {
 
+  //created a photo entity for our PicMe Database, gave it a primary key and auto-generated value
+  // this key is mandatory and can't be changed
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "photo_id", nullable = false, updatable = false)
   private Long Id;
 
+  //an attribute of the photo entity; it is to be used for tracking where photos were taken
+  //so that we can use them to tie to an Event Entity within our database.
   private Double latitude;
 
   private Double longitude;
