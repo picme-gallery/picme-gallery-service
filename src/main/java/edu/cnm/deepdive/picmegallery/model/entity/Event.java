@@ -13,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -30,7 +33,9 @@ public class Event {
   private Long id;
 
   @NonNull
-  // TODO Figure out if Event time is auto generated
+  //TODO remove setter
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 
