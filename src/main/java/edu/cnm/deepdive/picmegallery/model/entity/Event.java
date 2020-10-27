@@ -12,10 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
+@Table(
+    uniqueConstraints =
+        @UniqueConstraint(columnNames = "event_time")
+)
 public class Event {
 
   @Id
@@ -24,6 +30,7 @@ public class Event {
   private Long id;
 
   @NonNull
+  // TODO Figure out if Event time is auto generated
   @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 

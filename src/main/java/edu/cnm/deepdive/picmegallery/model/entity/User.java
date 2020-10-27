@@ -6,13 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
+ @Table(uniqueConstraints =
+ @UniqueConstraint(columnNames = {"oauth_key"}))
 public class User {
 
   //created a primary key for our entity, it can be changed and must have a value
@@ -31,6 +36,8 @@ public class User {
 //TODO Ask Nick follow-up questions about the implementation of our Oauth key for  sign-in features
   @Column(name = "oauth_key" )
   private String oauthKey;
+
+  // getters for the above fields.
 
   public Long getId() {
     return id;
