@@ -33,7 +33,6 @@ public class Event {
   private Long id;
 
   @NonNull
-  //TODO remove setter
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "event_time", nullable = false, updatable = false)
@@ -61,10 +60,6 @@ public class Event {
   @NonNull
   public Date getEventTime() {
     return eventTime;
-  }
-
-  public void setEventTime(@NonNull Date eventTime) {
-    this.eventTime = eventTime;
   }
 
   public Double getLatitude() {
