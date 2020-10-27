@@ -30,7 +30,7 @@ public class Photo {
   @Nullable
   private Double latitude;
 
-  @NonNull
+  @Nullable
   private Double longitude;
 
   @ManyToOne
@@ -41,6 +41,7 @@ public class Photo {
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User user;
 
+  @Nullable
   private String caption;
 
   @NonNull

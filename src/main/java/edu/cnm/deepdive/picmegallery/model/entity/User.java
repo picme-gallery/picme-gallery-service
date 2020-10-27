@@ -32,23 +32,48 @@ public class User {
   @Temporal(TemporalType.TIMESTAMP)
   private Date created;
 
-  //private Date updated;
+  //TODO ask nick about updated
+  @NonNull
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date updated;
+
 //TODO Ask Nick follow-up questions about the implementation of our Oauth key for  sign-in features
   @Column(name = "oauth_key" )
   private String oauthKey;
 
-  // getters for the above fields.
+  // getters for id
+
 
   public Long getId() {
     return id;
   }
+
+  // getters and setters for everything else
 
   @NonNull
   public Date getCreated() {
     return created;
   }
 
+  public void setCreated(@NonNull Date created) {
+    this.created = created;
+  }
+
+  @NonNull
+  public Date getUpdated() {
+    return updated;
+  }
+
+  public void setUpdated(@NonNull Date updated) {
+    this.updated = updated;
+  }
+
   public String getOauthKey() {
     return oauthKey;
+  }
+
+  public void setOauthKey(String oauthKey) {
+    this.oauthKey = oauthKey;
   }
 }
