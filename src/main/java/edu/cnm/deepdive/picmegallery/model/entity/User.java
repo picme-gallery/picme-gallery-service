@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class User {
 
@@ -31,4 +32,16 @@ public class User {
   @Column(name = "oauth_key" )
   private String oauthKey;
 
+  public Long getId() {
+    return id;
+  }
+
+  @NonNull
+  public Date getCreated() {
+    return created;
+  }
+
+  public String getOauthKey() {
+    return oauthKey;
+  }
 }

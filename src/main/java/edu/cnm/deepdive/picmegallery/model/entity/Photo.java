@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Photo {
 
@@ -43,4 +44,49 @@ public class Photo {
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date uploaded;
+
+  public Long getId() {
+    return Id;
+  }
+
+  public Double getLatitude() {
+    return latitude;
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public Event getEvent() {
+    return event;
+  }
+
+  public void setEvent(Event event) {
+    this.event = event;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public String getCaption() {
+    return caption;
+  }
+
+  public void setCaption(String caption) {
+    this.caption = caption;
+  }
+
+  @NonNull
+  public Date getUploaded() {
+    return uploaded;
+  }
+
+  public void setUploaded(@NonNull Date uploaded) {
+    this.uploaded = uploaded;
+  }
 }

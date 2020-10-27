@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.springframework.lang.NonNull;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 public class Event {
 
@@ -40,4 +41,58 @@ public class Event {
   @OrderBy("uploaded DESC")
   @NonNull
   private List<Photo> photos = new LinkedList<>();
+
+  public Long getId() {
+    return id;
+  }
+
+  @NonNull
+  public Date getEventTime() {
+    return eventTime;
+  }
+
+  public void setEventTime(@NonNull Date eventTime) {
+    this.eventTime = eventTime;
+  }
+
+  public Double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
+
+  public String getEventName() {
+    return eventName;
+  }
+
+  public void setEventName(String eventName) {
+    this.eventName = eventName;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  @NonNull
+  public List<Photo> getPhotos() {
+    return photos;
+  }
+
+  public void setPhotos(@NonNull List<Photo> photos) {
+    this.photos = photos;
+  }
 }
