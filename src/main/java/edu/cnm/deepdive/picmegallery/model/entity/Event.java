@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -38,8 +39,12 @@ public class Event {
   @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 
+  @Nullable
+  @Column(updatable = false)
   private Double latitude;
 
+  @Nullable
+  @Column(updatable = false)
   private Double longitude;
 
   @Column(name = "event_name",nullable = false, updatable = true)
