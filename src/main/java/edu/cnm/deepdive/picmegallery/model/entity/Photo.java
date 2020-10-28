@@ -3,6 +3,7 @@ package edu.cnm.deepdive.picmegallery.model.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-@Table( indexes = @Index(columnList = "uploaded")   )
+@Table(indexes = @Index(columnList = "uploaded"))
 public class Photo {
 
   // Created a photo entity for our PicMe Database, gave it a primary key and auto-generated value
@@ -31,14 +32,14 @@ public class Photo {
   // Ties an Event Entity within our database
   // FK to help id which event a photo is associated with
   @NonNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "event_id", nullable = false, updatable = false)
   private Event event;
 
   // Ties a User Entity within our database
   // FK to help id which user is associated with a photo
   @NonNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User user;
 

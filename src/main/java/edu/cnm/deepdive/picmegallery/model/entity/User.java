@@ -59,10 +59,10 @@ public class User {
   private String oauthKey;
 
   // Added user list so that we can have access who has uploaded each photo
-  @OneToMany(mappedBy = "User", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @OrderBy("oauthKey DESC")
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OrderBy("uploaded DESC")
   @NonNull
-  private List<User> user = new LinkedList<>();
+  private final List<Photo> photos = new LinkedList<>();
 
   // Made a list that joins event id and user id so that we can look up what users are associated with which event
   // This is a way to keep track what users have downloaded
@@ -83,7 +83,6 @@ public class User {
   }
 
   // Getters and setters for everything else
-
 
   @NonNull
   public Date getCreated() {
@@ -131,12 +130,8 @@ public class User {
   }
 
   @NonNull
-  public List<User> getUser() {
-    return user;
-  }
-
-  public void setUser(@NonNull List<User> user) {
-    this.user = user;
+  public List<Photo> getPhotos() {
+    return photos;
   }
 
   @NonNull

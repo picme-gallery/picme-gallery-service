@@ -27,12 +27,13 @@ import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-  // Index of event time and event updated
-@Table( indexes = {
+// Index of event time and event updated
+@Table(indexes = {
     @Index(columnList = "event_time"),
     @Index(columnList = "event_updated")
 })
 public class Event {
+
   // Primary key of Event entity
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,7 +55,7 @@ public class Event {
   private Date eventUpdated;
 
   // Name of the event
-  @Column(name = "event_name",nullable = false)
+  @Column(name = "event_name", nullable = false)
   private String eventName;
 
   // Physical address of the event
@@ -80,9 +81,9 @@ public class Event {
   private String password;
 
   // When we delete an event we delete all photos associated with the event.
+  @NonNull
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
-  @NonNull
   private List<Photo> photos = new LinkedList<>();
 
   // Created a list of users associated with each event so that we can see who is a part of which event.
@@ -90,9 +91,7 @@ public class Event {
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   @OrderBy("created ASC")
-  private final List<User> users = new LinkedList<>();
-
-
+  private List<User> users = new LinkedList<>();
 
   // Getters and setters below
 
