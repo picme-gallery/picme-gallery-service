@@ -47,10 +47,10 @@ public class Event {
   @Column(updatable = false)
   private Double longitude;
 
-  @Column(name = "event_name",nullable = false, updatable = true)
+  @Column(name = "event_name",nullable = false)
   private String eventName;
 
- @Column(nullable = false, updatable = true)
+ @Column(nullable = false)
   private String password;
 
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -67,19 +67,25 @@ public class Event {
     return eventTime;
   }
 
+  public void setEventTime(@NonNull Date eventTime) {
+    this.eventTime = eventTime;
+  }
+
+  @Nullable
   public Double getLatitude() {
     return latitude;
   }
 
-  public void setLatitude(Double latitude) {
+  public void setLatitude(@Nullable Double latitude) {
     this.latitude = latitude;
   }
 
+  @Nullable
   public Double getLongitude() {
     return longitude;
   }
 
-  public void setLongitude(Double longitude) {
+  public void setLongitude(@Nullable Double longitude) {
     this.longitude = longitude;
   }
 
