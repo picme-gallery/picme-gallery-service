@@ -46,6 +46,10 @@ public class User {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
 
+  @NonNull
+  @Column(name = "display_name")
+  private String displayName;
+
 //TODO Ask Nick follow-up questions about the implementation of our Oauth key for  sign-in features
   @Column(name = "oauth_key" )
   private String oauthKey;
@@ -57,12 +61,13 @@ public class User {
   private List<User> user = new LinkedList<>();
 
 // Made a list that joins event id and user id so that we can look up what users are associated with which event
+  @NonNull
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
       CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
+  @JoinTable(name = "user_event", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "event_id"))
   @OrderBy("eventName ASC")
-  private List<Event> events = new LinkedList<>();
+  private final List<Event> events = new LinkedList<>();
 
 
   // getters for id
@@ -73,6 +78,7 @@ public class User {
   }
 
   // getters and setters for everything else
+
 
   @NonNull
   public Date getCreated() {
@@ -92,6 +98,15 @@ public class User {
     this.updated = updated;
   }
 
+  @NonNull
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(@NonNull String displayName) {
+    this.displayName = displayName;
+  }
+
   public String getOauthKey() {
     return oauthKey;
   }
@@ -107,5 +122,10 @@ public class User {
 
   public void setUser(@NonNull List<User> user) {
     this.user = user;
+  }
+
+  @NonNull
+  public List<Event> getEvents() {
+    return events;
   }
 }

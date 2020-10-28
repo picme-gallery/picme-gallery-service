@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,10 +27,10 @@ import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
-@Table(
-    uniqueConstraints =
-        @UniqueConstraint(columnNames = "event_time")
-)
+@Table( indexes = {
+    @Index(columnList = "event_time"),
+    @Index(columnList = "event_updated")
+})
 public class Event {
 
   @Id
@@ -43,6 +44,21 @@ public class Event {
   @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 
+  @NonNull
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "event_updated", nullable = false, updatable = false)
+  private Date eventUpdated;
+
+  @Column(name = "event_name",nullable = false)
+  private String eventName;
+
+  @Column(name = "event_address")
+  private String eventAddress;
+
+  @Column(name = "event_description")
+  private String eventDescription;
+
   @Nullable
   @Column(updatable = false)
   private Double latitude;
@@ -51,8 +67,6 @@ public class Event {
   @Column(updatable = false)
   private Double longitude;
 
-  @Column(name = "event_name",nullable = false)
-  private String eventName;
 
  @Column(nullable = false)
   private String password;
@@ -64,11 +78,11 @@ public class Event {
   private List<Photo> photos = new LinkedList<>();
 
   //created a list of users associated with each event so that we can see who is apart of which event.
+  @NonNull
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users",
-      cascade = {CascadeType.DETACH, CascadeType.MERGE,
-          CascadeType.PERSIST, CascadeType.REFRESH})
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   @OrderBy("created ASC")
-  private List<User> users = new LinkedList<>();
+  private final List<User> users = new LinkedList<>();
 
   public Long getId() {
     return id;
@@ -81,6 +95,39 @@ public class Event {
 
   public void setEventTime(@NonNull Date eventTime) {
     this.eventTime = eventTime;
+  }
+
+  @NonNull
+  public Date getEventUpdated() {
+    return eventUpdated;
+  }
+
+  public void setEventUpdated(@NonNull Date eventUpdated) {
+    this.eventUpdated = eventUpdated;
+  }
+
+  public String getEventName() {
+    return eventName;
+  }
+
+  public void setEventName(String eventName) {
+    this.eventName = eventName;
+  }
+
+  public String getEventAddress() {
+    return eventAddress;
+  }
+
+  public void setEventAddress(String eventAddress) {
+    this.eventAddress = eventAddress;
+  }
+
+  public String getEventDescription() {
+    return eventDescription;
+  }
+
+  public void setEventDescription(String eventDescription) {
+    this.eventDescription = eventDescription;
   }
 
   @Nullable
@@ -101,14 +148,6 @@ public class Event {
     this.longitude = longitude;
   }
 
-  public String getEventName() {
-    return eventName;
-  }
-
-  public void setEventName(String eventName) {
-    this.eventName = eventName;
-  }
-
   public String getPassword() {
     return password;
   }
@@ -124,5 +163,10 @@ public class Event {
 
   public void setPhotos(@NonNull List<Photo> photos) {
     this.photos = photos;
+  }
+
+  @NonNull
+  public List<User> getUsers() {
+    return users;
   }
 }
