@@ -21,42 +21,47 @@ import org.springframework.lang.Nullable;
 @Table( indexes = @Index(columnList = "uploaded")   )
 public class Photo {
 
-  //created a photo entity for our PicMe Database, gave it a primary key and auto-generated value
-  // this key is mandatory and can't be changed
+  // Created a photo entity for our PicMe Database, gave it a primary key and auto-generated value
+  // This key is mandatory and can't be changed
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id", nullable = false, updatable = false)
   private Long Id;
 
+  // Ties an Event Entity within our database
+  // FK to help id which event a photo is associated with
   @NonNull
   @ManyToOne
   @JoinColumn(name = "event_id", nullable = false, updatable = false)
   private Event event;
 
+  // Ties a User Entity within our database
+  // FK to help id which user is associated with a photo
   @NonNull
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User user;
 
-  //an attribute of the photo entity; it is to be used for tracking where photos were taken
-  //so that we can use them to tie to an Event Entity within our database.
+  // Attribute of the photo entity; it is to be used for tracking where photos were taken
   @Nullable
   @Column(updatable = false)
   private Double latitude;
-
+  // Attribute of the photo entity; it is to be used for tracking where photos were taken
   @Nullable
   @Column(updatable = false)
   private Double longitude;
 
-
+  // An option for the user to add a caption to a photo
   @Nullable
   private String caption;
 
+  // A time stamp to see when a user uploaded a photo
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date uploaded;
 
+  // Getters and setters
   public Long getId() {
     return Id;
   }

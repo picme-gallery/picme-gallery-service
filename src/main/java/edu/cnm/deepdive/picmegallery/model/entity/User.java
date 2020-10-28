@@ -28,39 +28,44 @@ import org.springframework.lang.NonNull;
  @UniqueConstraint(columnNames = {"oauth_key"}))
 public class User {
 
-  //created a primary key for our entity, it can be changed and must have a value
+  // Created a primary key for our entity, it can be changed and must have a value
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id", nullable = false, updatable = false)
   private Long id;
 
-  //created timestamp of when the user entity is created, to be used later
+  // Created timestamp of when the user entity is created, to be used later
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date created;
-
-  //TODO ask nick about updated
+  // Time that user profile is updated
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
-
+  // Time that user profile connects to our service
+  @NonNull
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date connected;
+  // Customizable user display name, default is set from google account
   @NonNull
   @Column(name = "display_name")
   private String displayName;
-
-//TODO Ask Nick follow-up questions about the implementation of our Oauth key for  sign-in features
+  // Google sign in
+  @NonNull
   @Column(name = "oauth_key" )
   private String oauthKey;
 
-  //added user list so that we can have access who has downloaded each photo
+  // Added user list so that we can have access who has uploaded each photo
   @OneToMany(mappedBy = "User", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("oauthKey DESC")
   @NonNull
   private List<User> user = new LinkedList<>();
 
-// Made a list that joins event id and user id so that we can look up what users are associated with which event
+  // Made a list that joins event id and user id so that we can look up what users are associated with which event
+  // This is a way to keep track what users have downloaded
   @NonNull
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
       CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -70,14 +75,14 @@ public class User {
   private final List<Event> events = new LinkedList<>();
 
 
-  // getters for id
+  // Getters for id
 
 
   public Long getId() {
     return id;
   }
 
-  // getters and setters for everything else
+  // Getters and setters for everything else
 
 
   @NonNull
@@ -99,6 +104,15 @@ public class User {
   }
 
   @NonNull
+  public Date getConnected() {
+    return connected;
+  }
+
+  public void setConnected(@NonNull Date connected) {
+    this.connected = connected;
+  }
+
+  @NonNull
   public String getDisplayName() {
     return displayName;
   }
@@ -107,11 +121,12 @@ public class User {
     this.displayName = displayName;
   }
 
+  @NonNull
   public String getOauthKey() {
     return oauthKey;
   }
 
-  public void setOauthKey(String oauthKey) {
+  public void setOauthKey(@NonNull String oauthKey) {
     this.oauthKey = oauthKey;
   }
 

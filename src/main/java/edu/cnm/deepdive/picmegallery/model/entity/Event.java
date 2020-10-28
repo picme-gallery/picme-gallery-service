@@ -27,62 +27,74 @@ import org.springframework.lang.Nullable;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
+  // Index of event time and event updated
 @Table( indexes = {
     @Index(columnList = "event_time"),
     @Index(columnList = "event_updated")
 })
 public class Event {
-
+  // Primary key of Event entity
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "event_id", nullable = false, updatable = false)
   private Long id;
 
+  // Date stamp of when an event started
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "event_time", nullable = false, updatable = false)
   private Date eventTime;
 
+  // Date stamp of when an event and corresponding attributes are updated
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "event_updated", nullable = false, updatable = false)
   private Date eventUpdated;
 
+  // Name of the event
   @Column(name = "event_name",nullable = false)
   private String eventName;
 
+  // Physical address of the event
   @Column(name = "event_address")
   private String eventAddress;
 
+  // Modifiable and searchable description of the event.
   @Column(name = "event_description")
   private String eventDescription;
 
+  // Coordinates of the event
   @Nullable
   @Column(updatable = false)
   private Double latitude;
 
+  // Coordinates of the event
   @Nullable
   @Column(updatable = false)
   private Double longitude;
 
-
- @Column(nullable = false)
+  // Password to access event
+  @Column(nullable = false)
   private String password;
 
- // When we delete an event we delete all photos associated with the event.
+  // When we delete an event we delete all photos associated with the event.
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
   @NonNull
   private List<Photo> photos = new LinkedList<>();
 
-  //created a list of users associated with each event so that we can see who is apart of which event.
+  // Created a list of users associated with each event so that we can see who is a part of which event.
   @NonNull
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   @OrderBy("created ASC")
   private final List<User> users = new LinkedList<>();
+
+
+
+  // Getters and setters below
 
   public Long getId() {
     return id;
