@@ -28,9 +28,11 @@ public class Photo {
   //an attribute of the photo entity; it is to be used for tracking where photos were taken
   //so that we can use them to tie to an Event Entity within our database.
   @Nullable
+  @Column(updatable = false)
   private Double latitude;
 
   @Nullable
+  @Column(updatable = false)
   private Double longitude;
 
   @ManyToOne
@@ -53,12 +55,22 @@ public class Photo {
     return Id;
   }
 
+  @Nullable
   public Double getLatitude() {
     return latitude;
   }
 
+  public void setLatitude(@Nullable Double latitude) {
+    this.latitude = latitude;
+  }
+
+  @Nullable
   public Double getLongitude() {
     return longitude;
+  }
+
+  public void setLongitude(@Nullable Double longitude) {
+    this.longitude = longitude;
   }
 
   public Event getEvent() {
@@ -77,11 +89,12 @@ public class Photo {
     this.user = user;
   }
 
+  @Nullable
   public String getCaption() {
     return caption;
   }
 
-  public void setCaption(String caption) {
+  public void setCaption(@Nullable String caption) {
     this.caption = caption;
   }
 
