@@ -53,6 +53,7 @@ public class Event {
  @Column(nullable = false)
   private String password;
 
+ // When we delete an event we delete all photos associated with the event.
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
   @NonNull

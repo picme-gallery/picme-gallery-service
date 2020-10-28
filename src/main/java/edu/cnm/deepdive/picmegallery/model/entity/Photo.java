@@ -35,10 +35,12 @@ public class Photo {
   @Column(updatable = false)
   private Double longitude;
 
+  @NonNull
   @ManyToOne
   @JoinColumn(name = "event_id", nullable = false, updatable = false)
   private Event event;
 
+  @NonNull
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User user;
