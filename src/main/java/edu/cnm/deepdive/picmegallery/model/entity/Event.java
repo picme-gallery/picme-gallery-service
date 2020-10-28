@@ -10,6 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -58,6 +62,13 @@ public class Event {
   @OrderBy("uploaded DESC")
   @NonNull
   private List<Photo> photos = new LinkedList<>();
+
+  //created a list of users associated with each event so that we can see who is apart of which event.
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users",
+      cascade = {CascadeType.DETACH, CascadeType.MERGE,
+          CascadeType.PERSIST, CascadeType.REFRESH})
+  @OrderBy("created ASC")
+  private List<User> users = new LinkedList<>();
 
   public Long getId() {
     return id;

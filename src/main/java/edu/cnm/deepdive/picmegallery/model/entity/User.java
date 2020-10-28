@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -52,6 +55,15 @@ public class User {
   @OrderBy("oauthKey DESC")
   @NonNull
   private List<User> user = new LinkedList<>();
+
+// Made a list that joins event id and user id so that we can look up what users are associated with which event
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
+      CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "event_id"))
+  @OrderBy("eventName ASC")
+  private List<Event> events = new LinkedList<>();
+
 
   // getters for id
 
