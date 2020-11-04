@@ -11,17 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -49,30 +46,26 @@ public class Event {
 
   // Date stamp of when an event and corresponding attributes are updated
   @NonNull
-  @CreationTimestamp
+  @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "event_updated", nullable = false, updatable = false)
-  private Date eventUpdated;
+  @Column( nullable = false, updatable = false)
+  private Date updated;
 
   // Name of the event
-  @Column(name = "event_name", nullable = false)
-  private String eventName;
+  @Column( nullable = false)
+  private String name;
 
   // Physical address of the event
-  @Column(name = "event_address")
-  private String eventAddress;
+  private String address;
 
   // Modifiable and searchable description of the event.
-  @Column(name = "event_description")
-  private String eventDescription;
+  private String description;
 
   // Coordinates of the event
-  @Nullable
   @Column(updatable = false)
   private Double latitude;
 
   // Coordinates of the event
-  @Nullable
   @Column(updatable = false)
   private Double longitude;
 
@@ -84,7 +77,7 @@ public class Event {
   @NonNull
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
-  private List<Photo> photos = new LinkedList<>();
+  private final List<Photo> photos = new LinkedList<>();
 
   // Created a list of users associated with each event so that we can see who is a part of which event.
   @NonNull
@@ -104,43 +97,34 @@ public class Event {
     return eventTime;
   }
 
-  public void setEventTime(@NonNull Date eventTime) {
-    this.eventTime = eventTime;
-  }
-
   @NonNull
-  public Date getEventUpdated() {
-    return eventUpdated;
+  public Date getUpdated() {
+    return updated;
   }
 
-  public void setEventUpdated(@NonNull Date eventUpdated) {
-    this.eventUpdated = eventUpdated;
+  public String getName() {
+    return name;
   }
 
-  public String getEventName() {
-    return eventName;
+  public void setName(String eventName) {
+    this.name = eventName;
   }
 
-  public void setEventName(String eventName) {
-    this.eventName = eventName;
+  public String getAddress() {
+    return address;
   }
 
-  public String getEventAddress() {
-    return eventAddress;
+  public void setAddress(String eventAddress) {
+    this.address = eventAddress;
   }
 
-  public void setEventAddress(String eventAddress) {
-    this.eventAddress = eventAddress;
+  public String getDescription() {
+    return description;
   }
 
-  public String getEventDescription() {
-    return eventDescription;
+  public void setDescription(String eventDescription) {
+    this.description = eventDescription;
   }
-
-  public void setEventDescription(String eventDescription) {
-    this.eventDescription = eventDescription;
-  }
-
   @Nullable
   public Double getLatitude() {
     return latitude;
@@ -170,10 +154,6 @@ public class Event {
   @NonNull
   public List<Photo> getPhotos() {
     return photos;
-  }
-
-  public void setPhotos(@NonNull List<Photo> photos) {
-    this.photos = photos;
   }
 
   @NonNull

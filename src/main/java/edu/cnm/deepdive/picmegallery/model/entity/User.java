@@ -71,7 +71,7 @@ public class User {
       CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(name = "user_event", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "event_id"))
-  @OrderBy("eventName ASC")
+  @OrderBy("name ASC")
   private final List<Event> events = new LinkedList<>();
 
 
@@ -89,26 +89,14 @@ public class User {
     return created;
   }
 
-  public void setCreated(@NonNull Date created) {
-    this.created = created;
-  }
-
   @NonNull
   public Date getUpdated() {
     return updated;
   }
 
-  public void setUpdated(@NonNull Date updated) {
-    this.updated = updated;
-  }
-
   @NonNull
   public Date getConnected() {
     return connected;
-  }
-
-  public void setConnected(@NonNull Date connected) {
-    this.connected = connected;
   }
 
   @NonNull

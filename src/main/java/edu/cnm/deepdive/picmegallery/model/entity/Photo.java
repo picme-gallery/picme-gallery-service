@@ -115,7 +115,4 @@ public class Photo {
     return uploaded;
   }
 
-  public void setUploaded(@NonNull Date uploaded) {
-    this.uploaded = uploaded;
-  }
 }
