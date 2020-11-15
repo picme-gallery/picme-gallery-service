@@ -26,6 +26,7 @@ import org.springframework.lang.Nullable;
  * Event is a @Entity class with the following fields {@link ##id}, {@link ##name}, {@link ##address},
  * {@link ##description}, {@link ##eventTime}, {@link ##latitude}, {@link ##longitude}, {@link ##password},
  * {@link ##photos} and {@link ##photos}
+ * All of the fields in this class are attributes of Event and help form the structure of the Picme gallery database.
  *
  */
 
@@ -39,9 +40,7 @@ import org.springframework.lang.Nullable;
 public class Event {
 
   /**
-   * This field is id or "event_id".
    * This field is the primary key for Event .
-   *
    */
   // Primary key of Event entity
   @Id
