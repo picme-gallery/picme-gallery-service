@@ -34,8 +34,8 @@ import org.springframework.lang.Nullable;
 @Entity
 // Index of event time and event updated
 @Table(indexes = {
-    @Index(columnList = "event_time"),
-    @Index(columnList = "event_updated")
+    @Index(columnList = "eventTime"),
+    @Index(columnList = "updated")
 })
 public class Event {
 
@@ -56,7 +56,7 @@ public class Event {
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "event_time", nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false)
   private Date eventTime;
 
   /**
@@ -123,10 +123,10 @@ public class Event {
    */
   // Created a list of users associated with each event so that we can see who is a part of which event.
   @NonNull
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users",
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   @OrderBy("created ASC")
-  private List<User> users = new LinkedList<>();
+  private final List<User> users = new LinkedList<>();
 
   // Getters and setters below
 

@@ -35,8 +35,8 @@ public class Photo {
   // This key is mandatory and can't be changed
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id", nullable = false, updatable = false)
-  private Long Id;
+  @Column(name = "photo_id", nullable = false, updatable = false)
+  private Long id;
 
   /**
    * This field ties an Event Entity within our database.
@@ -97,7 +97,7 @@ public class Photo {
    */
   // Getters and setters
   public Long getId() {
-    return Id;
+    return id;
   }
 
   /**

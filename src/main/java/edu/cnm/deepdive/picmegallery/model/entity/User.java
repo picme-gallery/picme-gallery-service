@@ -20,12 +20,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
- @Table(uniqueConstraints =
- @UniqueConstraint(columnNames = {"oauth_key"}))
+ @Table(
+     name = "user_profile",
+     uniqueConstraints = @UniqueConstraint(columnNames = {"oauth_key"}))
 public class User {
 
   // Created a primary key for our entity, it can be changed and must have a value
@@ -41,12 +43,11 @@ public class User {
   private Date created;
   // Time that user profile is updated
   @NonNull
-  @CreationTimestamp
+  @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
   // Time that user profile connects to our service
   @NonNull
-  @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date connected;
   // Customizable user display name, default is set from google account
@@ -97,6 +98,10 @@ public class User {
   @NonNull
   public Date getConnected() {
     return connected;
+  }
+
+  public void setConnected(@NonNull Date connected) {
+    this.connected = connected;
   }
 
   @NonNull
