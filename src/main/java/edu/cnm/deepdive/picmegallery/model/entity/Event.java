@@ -11,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -24,7 +26,7 @@ import org.springframework.lang.Nullable;
 
 /**
  * Event is a @Entity class with the following fields {@link ##id}, {@link ##name}, {@link ##address},
- * {@link ##description}, {@link ##time}, {@link ##latitude}, {@link ##longitude}, {@link ##password},
+ * {@link ##description}, {@link ##time}, {@link ##latitude}, {@link ##longitude}, {@link ##passkey},
  * {@link ##photos} and {@link ##photos}
  * All of the fields in this class are attributes of Event and help form the structure of the Picme gallery database.
  *
@@ -47,6 +49,11 @@ public class Event {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "event_id", nullable = false, updatable = false)
   private Long id;
+
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn( name = "user_id")
+  private User user;
 
   /**
    * This field is event Time or "event_id".
@@ -107,7 +114,7 @@ public class Event {
    */
   // Password to access event
   @Column(nullable = false)
-  private String password;
+  private String passkey;
 
   /**
    * This field is the @OneToMany side of the relationship between Event and Photo.
@@ -136,6 +143,14 @@ public class Event {
    */
   public Long getId() {
     return id;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   /**
@@ -235,15 +250,15 @@ public class Event {
    * Gets the password of an Event.
    * @return password of aa Event.
    */
-  public String getPassword() {
-    return password;
+  public String getPasskey() {
+    return passkey;
   }
 
   /**
    * Sets the password of an Event.
    */
-  public void setPassword(String password) {
-    this.password = password;
+  public void setPasskey(String passkey) {
+    this.passkey = passkey;
   }
 
   /**
