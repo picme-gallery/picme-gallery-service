@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
 
 /**
  * Event is a @Entity class with the following fields {@link ##id}, {@link ##name}, {@link ##address},
- * {@link ##description}, {@link ##eventTime}, {@link ##latitude}, {@link ##longitude}, {@link ##password},
+ * {@link ##description}, {@link ##time}, {@link ##latitude}, {@link ##longitude}, {@link ##password},
  * {@link ##photos} and {@link ##photos}
  * All of the fields in this class are attributes of Event and help form the structure of the Picme gallery database.
  *
@@ -34,7 +34,7 @@ import org.springframework.lang.Nullable;
 @Entity
 // Index of event time and event updated
 @Table(indexes = {
-    @Index(columnList = "eventTime"),
+    @Index(columnList = "time"),
     @Index(columnList = "updated")
 })
 public class Event {
@@ -57,7 +57,7 @@ public class Event {
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
-  private Date eventTime;
+  private Date time;
 
   /**
    *This field is a date stamp of when an event and corresponding attributes are updated.
@@ -143,8 +143,8 @@ public class Event {
    * @return the Events start time.
    */
   @NonNull
-  public Date getEventTime() {
-    return eventTime;
+  public Date getTime() {
+    return time;
   }
 
   /**
