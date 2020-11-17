@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +63,8 @@ public class User {
   // Added user list so that we can have access who has uploaded each photo
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
+  //TODO resolve Json Ignore
+  @JsonIgnore
   @NonNull
   private final List<Photo> photos = new LinkedList<>();
 
@@ -70,6 +73,8 @@ public class User {
   @NonNull
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
       CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  //TODO resolve Json Ignore
+  @JsonIgnore
   @JoinTable(name = "user_event", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "event_id"))
   @OrderBy("name ASC")
