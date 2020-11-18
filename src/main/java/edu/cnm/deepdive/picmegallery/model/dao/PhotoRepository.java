@@ -50,6 +50,11 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
   Optional<Photo> findPhotoById(Long id);
 
 
+  /**
+   * Gets all the photos that are associated with an event.
+   * @param event_id the primary key of an event.
+   * @return A list of photos that are associated with an event
+   */
   List<Photo> findAllByEvent_Id(Long event_id);
 
 //  /**
