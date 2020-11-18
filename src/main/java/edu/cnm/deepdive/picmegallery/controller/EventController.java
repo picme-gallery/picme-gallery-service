@@ -16,13 +16,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This Class is a @RestController handles the endpoints for communication between the client side to the serverside.
+ */
 @RestController
 @RequestMapping("/events")
 @ExposesResourceFor(Event.class)
 public class EventController {
 
+  /**
+   * This field is a reference to EventService.
+   */
   private final EventService eventService;
 
+  /**
+   * This Constructor creates an EventService object.
+   * @param eventService is an EventService object.
+   */
   @Autowired
   public EventController(EventService eventService) {
     this.eventService = eventService;
