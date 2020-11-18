@@ -22,5 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
   Optional<Event> findByIdAndPasskey(Long id, String passkey);
 
+  Optional<Event> findAllBy();
 
+  Optional<Event> deleteEventById(Long id);
 }

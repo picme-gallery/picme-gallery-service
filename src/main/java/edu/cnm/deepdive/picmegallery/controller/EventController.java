@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,4 +38,13 @@ public class EventController {
     return eventService.get(id, passkey);
   }
 
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Optional<Event> getAll() {
+    return eventService.getAll();
+  }
+
+  @DeleteMapping(value = {"/{id}/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void delete(@RequestBody Event event, Long id) {
+    eventService.delete(event, id);
+  }
 }
