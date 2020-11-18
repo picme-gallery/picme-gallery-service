@@ -50,7 +50,7 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
   Optional<Photo> findPhotoById(Long id);
 
 
-  Iterable<Photo> findAllByEvent_Id(Long event_id);
+  List<Photo> findAllByEvent_Id(Long event_id);
 
 //  /**
 //   * Deletes all the photos associated with an event.

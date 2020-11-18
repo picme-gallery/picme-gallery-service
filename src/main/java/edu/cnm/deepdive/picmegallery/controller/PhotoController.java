@@ -3,6 +3,7 @@ package edu.cnm.deepdive.picmegallery.controller;
 import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.service.PhotoService;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -44,7 +45,7 @@ public class PhotoController {
   }
 
   @GetMapping(value = {"/{id/photos}"}, produces = MediaType.APPLICATION_JSON_VALUE)
- public Iterable<Photo> getAll( @PathVariable Long id){
+ public List<Photo> getAll( @PathVariable Long id){
     return photoService.getAll(id);
  }
 

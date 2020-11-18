@@ -34,7 +34,7 @@ public class PhotoService {
       return  photoRepository.findPhotoById(id);
     }
 
-  public Iterable<Photo> getAll(Long id) {
+  public List<Photo> getAll(Long id) {
     return photoRepository.findAllByEvent_Id(id);
   }
 
