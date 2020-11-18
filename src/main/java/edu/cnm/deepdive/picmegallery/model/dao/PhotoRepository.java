@@ -4,12 +4,13 @@ import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
-  Optional<Photo> findPhotosByEvent(Event event);
+  Optional <List<Photo>> findPhotosByEvent(Long id);
 
   Optional<Photo> findPhotosByUser(User user);
 
@@ -17,4 +18,5 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
   Optional<Photo> findPhotoByLatitudeAndLongitude(Double latitude, Double longitude);
 
+  Optional<Photo> findPhotoByEvent(Long id);
 }

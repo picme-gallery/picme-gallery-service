@@ -30,7 +30,6 @@ public class EventService {
  public Optional<Event> get(Long id, String passkey){
     return eventRepository.findByIdAndPasskey(id, passkey);
 
-
  }
 
 
