@@ -25,8 +25,8 @@ public class EventController {
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event post(@RequestBody Event event, Authentication auth) {
-    return eventService.save(event,(User) auth.getPrincipal());
+  public Event post(@RequestBody Event event, Authentication auth, String passkey) {
+    return eventService.save(event,(User) auth.getPrincipal(), passkey);
   }
 
 

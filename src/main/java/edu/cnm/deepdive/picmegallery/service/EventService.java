@@ -16,14 +16,14 @@ public class EventService {
     this.eventRepository = eventRepository;
   }
 
- public Event save(Event event, User user) {
+ public Event save(Event event, User user, String passkey) {
     if (event.getId() == null || event.getId() == 0){
       event.setUser(user);
       //TODO Need to implement a passkey
-
+      //TODO Ask Todd
+      event.setPasskey(passkey);
     }
     return eventRepository.save(event);
-
  }
 
 

@@ -20,8 +20,7 @@ import org.springframework.lang.Nullable;
 /**
  * Photo is a @Entity class with the following fields {@link ##id}, {@link ##event}, {@link ##uploaded},
  * {@link ##longitude}, {@link ##latitude}, {@link ##uploaded}, {@link ##caption}
- * All of the fields in this class are attributes of Photo and help form the structure of the Picme gallery database.
- *
+ * All of the fields in this class are attributes of Photo and help form the structure of the PicMe Gallery database.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
@@ -40,7 +39,7 @@ public class Photo {
 
   /**
    * This field ties an Event Entity within our database.
-   * This field is the @ManyToOne side of the relationship between Event and photo.
+   * This field is the @ManyToOne side of the relationship between Event and Photo.
    */
   // Ties an Event Entity within our database
   // FK to help id which event a photo is associated with

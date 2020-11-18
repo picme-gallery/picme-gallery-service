@@ -24,6 +24,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
+/**
+ * User is a @Entity class with the following fields {@link ##id}, {@link ##created}, {@link ##updated},
+ * {@link ##connected}, {@link ##displayName}, and {@link ##oauthKey}.
+ * All of the fields in this class are attributes of User and help form the structure of the PicMe Gallery database.
+ */
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
  @Table(
@@ -31,35 +36,61 @@ import org.springframework.lang.NonNull;
      uniqueConstraints = @UniqueConstraint(columnNames = {"oauth_key"}))
 public class User {
 
+  /**
+   * This field is a primary key.
+   */
   // Created a primary key for our entity, it can be changed and must have a value
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id", nullable = false, updatable = false)
   private Long id;
 
+  /**
+   * This field is the timestap of when the User is created.
+   */
   // Created timestamp of when the user entity is created, to be used later
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date created;
+
+  /**
+   * Timestamp of when the user profile is updated.
+   */
   // Time that user profile is updated
   @NonNull
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
+
+  /**
+   * Timestamp of when the user last connected to our service.
+   */
   // Time that user profile connects to our service
   @NonNull
   @Temporal(TemporalType.TIMESTAMP)
   private Date connected;
+
+  /**
+   * User's display name.
+   */
   // Customizable user display name, default is set from google account
   @NonNull
   @Column(name = "display_name")
   private String displayName;
+
+  /**
+   * Oauth 2.0 key from Google.
+   */
   // Google sign in
   @NonNull
   @Column(name = "oauth_key" )
   private String oauthKey;
 
+  /**
+   * This is the @OneToMany side of the relation between User & Photo.
+   * Contains a list of photos ordered by date uploaded, showing who uploaded each photo.
+   */
   // Added user list so that we can have access who has uploaded each photo
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
@@ -68,6 +99,11 @@ public class User {
   @NonNull
   private final List<Photo> photos = new LinkedList<>();
 
+  /**
+   * This is one side of the @ManyToMany relationship between Event and User
+   * Allows us to see which users are associated with which event.
+   *  Also, allows us to keep track what photos users have downloaded.
+   */
   // Made a list that joins event id and user id so that we can look up what users are associated with which event
   // This is a way to keep track what users have downloaded
   @NonNull

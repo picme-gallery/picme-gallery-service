@@ -27,8 +27,8 @@ import org.springframework.lang.Nullable;
 /**
  * Event is a @Entity class with the following fields {@link ##id}, {@link ##name}, {@link ##address},
  * {@link ##description}, {@link ##time}, {@link ##latitude}, {@link ##longitude}, {@link ##passkey},
- * {@link ##photos} and {@link ##photos}
- * All of the fields in this class are attributes of Event and help form the structure of the Picme gallery database.
+ * {@link ##photos}
+ * All of the fields in this class are attributes of Event and help form the structure of the PicMe Gallery database.
  *
  */
 
@@ -42,7 +42,7 @@ import org.springframework.lang.Nullable;
 public class Event {
 
   /**
-   * This field is the primary key for Event .
+   * This field is the primary key for an Event.
    */
   // Primary key of Event entity
   @Id
@@ -50,14 +50,17 @@ public class Event {
   @Column(name = "event_id", nullable = false, updatable = false)
   private Long id;
 
-
+  /**
+   * This field is the @ManyToOne relationship between Event and User.
+   * This is the user associated with creating an Event entity.
+   */
+  @NonNull
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn( name = "user_id")
   private User user;
 
   /**
-   * This field is event Time or "event_id".
-   * This field is an attribute of Event and is the the time an Event is taking place.
+   * This field is the time an event is created.
    */
   // Date stamp of when an event started
   @NonNull
@@ -80,6 +83,7 @@ public class Event {
    * This field is the name of the event.
    */
   //Name of the event
+  @NonNull
   @Column( nullable = false)
   private String name;
 
@@ -99,6 +103,7 @@ public class Event {
    * This field is part of the coordinates of the event.
    */
   // Coordinates of the event
+  @Nullable
   @Column(updatable = false)
   private Double latitude;
 
@@ -106,13 +111,15 @@ public class Event {
    * This field is part of the coordinates of the event.
    */
   // Coordinates of the event
+  @Nullable
   @Column(updatable = false)
   private Double longitude;
 
   /**
-   * This field is the password to access event
+   * This field is the passkey to access event
    */
-  // Password to access event
+  // Passkey to access event
+  @NonNull
   @Column(nullable = false)
   private String passkey;
 
@@ -126,7 +133,7 @@ public class Event {
   private final List<Photo> photos = new LinkedList<>();
 
   /**
-   * This field is one side of the @ManytoMany  relationship between Event and User.
+   * This field is one side of the @ManytoMany relationship between Event and User.
    */
   // Created a list of users associated with each event so that we can see who is a part of which event.
   @NonNull
@@ -138,24 +145,29 @@ public class Event {
   // Getters and setters below
 
   /**
-   *  Gets the Events id.
-   * @return the Events id
+   *  Gets the Event's id.
    */
   public Long getId() {
     return id;
   }
 
+  /**
+   *  Gets the User who created the event.
+   */
+  @NonNull
   public User getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  /**
+   * Sets the sets the User who created the event.
+   */
+  public void setUser(@NonNull User user) {
     this.user = user;
   }
 
   /**
-   * Gets the Events start time
-   * @return the Events start time.
+   * Gets the Event's start time
    */
   @NonNull
   public Date getTime() {
@@ -163,8 +175,7 @@ public class Event {
   }
 
   /**
-   * Gets the time Event was updated.
-   * @return the Events start time.
+   * Gets the time the Event was updated.
    */
   @NonNull
   public Date getUpdated() {
@@ -172,67 +183,65 @@ public class Event {
   }
 
   /**
-   * Gets the Events name.
-   * @return the Events name.
+   * Gets the Event's name.
    */
+  @NonNull
   public String getName() {
     return name;
   }
 
   /**
-   * Sets the Events name.
+   * Sets the Event's name.
    */
-  public void setName(String eventName) {
-    this.name = eventName;
+  public void setName(@NonNull String name) {
+    this.name = name;
   }
 
   /**
-   * Gets the Events address.
-   * @return the Events start time.
+   * Gets the Event's address.
    */
   public String getAddress() {
     return address;
   }
 
   /**
-   * Sets the Events address.
+   * Sets the Event's address.
    */
   public void setAddress(String eventAddress) {
     this.address = eventAddress;
   }
 
   /**
-   * Gets the events description.
-   * @return the events description.
+   * Gets the Event's description.
    */
   public String getDescription() {
     return description;
   }
 
   /**
-   * Sets the Event description.
+   * Sets the Event's description.
    */
   public void setDescription(String eventDescription) {
     this.description = eventDescription;
   }
 
   /**
-   * Gets the Latitude of an Event.
-   * @return latitude of an event.
+   * Gets the latitude of an Event.
    */
   @Nullable
   public Double getLatitude() {
     return latitude;
   }
+
   /**
-   * Sets the Latitude of an Event.
+   * Sets the latitude of an Event.
    */
   public void setLatitude(@Nullable Double latitude) {
     this.latitude = latitude;
   }
+
   /**
    * Gets the longitude of an Event.
-   * @return longitude of aa Event.
    */
   @Nullable
   public Double getLongitude() {
@@ -240,30 +249,29 @@ public class Event {
   }
 
   /**
-   * Sets the Longitude of an Event.
+   * Sets the longitude of an Event.
    */
   public void setLongitude(@Nullable Double longitude) {
     this.longitude = longitude;
   }
 
   /**
-   * Gets the password of an Event.
-   * @return password of aa Event.
+   * Gets the passkey of an Event.
    */
+  @NonNull
   public String getPasskey() {
     return passkey;
   }
 
   /**
-   * Sets the password of an Event.
+   * Sets the passkey of an Event.
    */
-  public void setPasskey(String passkey) {
+   public void setPasskey(@NonNull String passkey) {
     this.passkey = passkey;
   }
 
   /**
    * Gets all the photos related to an event.
-   * @return all the photos related to an event.
    */
   @NonNull
   public List<Photo> getPhotos() {
@@ -272,7 +280,6 @@ public class Event {
 
   /**
    * Gets all the user associated with an event.
-   * @return the current user.
    */
   @NonNull
   public List<User> getUsers() {
