@@ -2,14 +2,12 @@ package edu.cnm.deepdive.picmegallery.controller;
 
 import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
-import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.PhotoService;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,13 +39,19 @@ public class PhotoController {
   }
 
   @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Optional<Photo> get(@PathVariable Long id){
-    return photoService.getOnePhotoByEvent(id);
+  public Optional<Photo> get( @PathVariable Long id){
+    return photoService.get(id);
   }
 
   @GetMapping(value = {"/{id/photos}"}, produces = MediaType.APPLICATION_JSON_VALUE)
- public Optional<List<Photo>> getAll( @PathVariable Long id){
-    return photoService.getPhotosByEvent(id);
+ public Iterable<Photo> getAll( @PathVariable Long id){
+    return photoService.getAll(id);
  }
+
+  @DeleteMapping(value = {"/{id}/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void delete(@RequestBody Photo photo, Long id) {
+    photoService.delete(photo, id);
+  }
+
 
 }

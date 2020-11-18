@@ -9,16 +9,16 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * This interface extends {@link JpaRepository}.
- * This interface handles the queries that deal with photos.
+ * This interface handles searching for photos using different parameters including id, Event, uploaded, and location.
  */
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
   /**
    * Finds photos by the event that they are associated with.
-   * @param id is the primary key of an event.
+   * @param event is an Event object.
    * @return A collection of photos associated with an event.
    */
-  Optional <List<Photo>> findPhotosByEvent(Long id);
+  Optional <List<Photo>> findPhotosByEvent(Event event);
 
   /**
    * Finds a Photo that it is associated with a user.
@@ -43,9 +43,18 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
   Optional<Photo> findPhotoByLatitudeAndLongitude(Double latitude, Double longitude);
 
   /**
-   * Finds a photo by the event that it is associated with.
-   * @param id is the primary key of an event.
-   * @return A photo associated with an event.
+   * Finds a photo by id.
+   * @param id The primary key.
+   * @return A Specific Photo associated to the primary key
    */
-  Optional<Photo> findPhotoByEvent(Long id);
+  Optional<Photo> findPhotoById(Long id);
+
+
+  Iterable<Photo> findAllByEvent_Id(Long event_id);
+
+//  /**
+//   * Deletes all the photos associated with an event.
+//   * @param iterable
+//   */
+//  void deleteAll(Iterable<? extends Photo> iterable);
 }
