@@ -44,7 +44,7 @@ public class PhotoController {
    * Creates a new Photo in the PicMe database with the Event associated.
    * @param photo is a Photo object.
    * @param event is a Event object.
-   * @return Returns a saved photo.
+   * @return A saved photo.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Photo post(@RequestBody Photo photo,Event event) {
@@ -65,7 +65,7 @@ public class PhotoController {
   /**
    * Gets the photos associated with a User.
    * @param user is a User object.
-   * @return A Collection of Photos associated with a user
+   * @return A Collection of photos associated with a user
    */
   @GetMapping(value = {"/{user}"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Photo> getAllPhotosByUser (@PathVariable User user){
