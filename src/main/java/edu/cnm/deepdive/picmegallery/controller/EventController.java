@@ -6,7 +6,6 @@ import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.EventService;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * This Class is a @RestController that handles the endpoints for communication between the client side to the serverside for the Event.
+ * This Class is a @RestController that handles the endpoints for communication between the client side to the serverside for the Events.
  */
 @RestController
 @RequestMapping("/events")
@@ -56,7 +55,7 @@ public class EventController {
   }
 
   /**
-   * This get method returns access to an Event in the PicMe Database.
+   * This get method returns access to an Event in the PicMe Database, for those who did not originate the Event.
    * @param id is the associated Event id.
    * @param passkey is the associated passkey.
    * @return access to the specified Event in the PicMeDatabase.
@@ -67,12 +66,26 @@ public class EventController {
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * This method gets the event specified for the User who created/ originated the event.
+   * @param id the associated event id
+   * @param auth the authentication object
+   * @return the event for the creator.
+   */
   @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event getEventForCreator(@PathVariable long id,Authentication auth){
+  public Event getEvent(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * This method gets the photos associated with an Event in the PicMe Database, for those who did not originate the Event.
+   * Hence a passkey is required.
+   * @param id id the primary key associated with the specific event object.
+   * @param passkey is the associated passkey for an event.
+   * @param auth auth the auth object and source of authentication for a specified user.
+   * @return  a List of photos
+   */
   @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Photo> getPhotos(@PathVariable long id, @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth){
     return eventService.get(id, passkey)
@@ -80,20 +93,31 @@ public class EventController {
         .orElseThrow(NoSuchElementException::new);
   }
 
+  /**
+   * This method gets the photos associated with an Event in the PicMe Database, for the Event originator/creator.
+   * @param id the primary key associated with the specific event object.
+   * @param auth the auth object and source of authentication for a specified user.
+   * @return a List of photos
+   */
   @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Photo> getPhotosForCreator(@PathVariable long id,Authentication auth){
+  public List<Photo> getPhotos(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .map(Event::getPhotos)
         .orElseThrow(NoSuchElementException::new);
   }
   /**
    * This method gets all Events in the PicMeDatabase for a specified User.
-   * @return
+   * @return a List of Events in the PicMeDatabase for a specified User
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Event> getAllUserEvents(User user) {return eventService.getAllUserEvents(user);
   }
 
+  /**
+   * This delete method deletes an event by the specified event id.
+   * @param event the passed in event object
+   * @param id the primary key associated with the specific event object.
+   */
   @DeleteMapping(value = {"/{id}/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void delete(@RequestBody Event event, long id) {
     eventService.delete(event, id);
