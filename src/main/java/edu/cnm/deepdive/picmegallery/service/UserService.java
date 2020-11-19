@@ -13,21 +13,20 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 /**
- * The class is an @Service class that implements a converter that converts a java web token to
- * a authentication token for the user.
+ * The class is a @Service class that implements a converter that converts a java web token to an
+ * authentication token for the user.
  */
 
 @Service
 public class UserService implements Converter<Jwt, UsernamePasswordAuthenticationToken> {
-/**
- *
- This private final field is a reference to UserRepository.
-  */
+
+  /**
+   * This private final field is a reference to UserRepository.
+   */
   private final UserRepository userRepository;
 
   /**
    * This Constructor creates a UserRepository object.
-   * UserRepository is a UserRepository object.
    */
   @Autowired
   public UserService(UserRepository userRepository) {
@@ -35,8 +34,9 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   }
 
   /**
-   *  Searches for a user with an Oauth Key and then makes a new user with an OathKey if it cannot find.
-   * @param oauthKey This is an Oauth key assigned to user.
+   * Searches for a user with an Oauth Key and then makes a new user with an OauthKey if it cannot
+   * find them.
+   * @param oauthKey This is an Oauth Key assigned to user.
    * @param userName This is a display name assigned to a user.
    * @return Returns a saved user from user repository.
    */
@@ -52,7 +52,8 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   }
 
   /**
-   * This is a helper method that converts a Jwt to grant authority to a user via a UsernamePasswordAuthenticationToken.
+   * This is a helper method that converts a Jwt to grant authority to a user via a
+   * UsernamePasswordAuthenticationToken.
    * @param jwt is the converted Json web token.
    * @return Returns a new Jwt to user.
    */
@@ -61,7 +62,7 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
     Collection<SimpleGrantedAuthority> grants =
         Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(
-        getOrCreate(jwt.getSubject(),jwt.getClaimAsString("name")),
+        getOrCreate(jwt.getSubject(), jwt.getClaimAsString("name")),
         jwt.getTokenValue(),
         grants
     );

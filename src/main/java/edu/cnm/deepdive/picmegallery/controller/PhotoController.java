@@ -5,7 +5,6 @@ import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.PhotoService;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -19,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * This Class is a @RestController which handles the endpoints for communication between the client side to the serverside.
+ * This Class is a @RestController which handles the endpoints for communication between the client
+ * side to the serverside.
  */
 @RestController
 @RequestMapping("/photos")
@@ -47,7 +47,7 @@ public class PhotoController {
    * @return A saved photo.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Photo post(@RequestBody Photo photo,Event event) {
+  public Photo post(@RequestBody Photo photo, Event event) {
     return photoService.save(photo, event);
 
   }
@@ -55,11 +55,11 @@ public class PhotoController {
   /**
    * Deletes a photo associated with a specific primary key.
    * @param photo is a Photo object.
-   * @param id is a Photo objects primary key.
+   * @param id    is a Photo objects primary key.
    */
   @DeleteMapping(value = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
   public void delete(@RequestBody Photo photo, long id) {
-  photoService.delete(photo, id);
+    photoService.delete(photo, id);
   }
 
   /**
@@ -68,8 +68,8 @@ public class PhotoController {
    * @return A Collection of photos associated with a user
    */
   @GetMapping(value = {"/{user}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Photo> getAllPhotosByUser (@PathVariable User user){
-     return photoService.getAllPhotosByUser(user);
+  public List<Photo> getAllPhotosByUser(@PathVariable User user) {
+    return photoService.getAllPhotosByUser(user);
   }
 
 }

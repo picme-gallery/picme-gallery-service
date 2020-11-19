@@ -5,15 +5,12 @@ import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.List;
-import java.util.Optional;
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * This class is an @Service class and holds the additional logic for the quarries involving a photo in the PicMe database.
+ * This is a @Service class and holds the additional logic for the queries involving a photo in the PicMe database.
  */
-
 @Service
 public class PhotoService {
 
@@ -23,7 +20,7 @@ public class PhotoService {
   private final PhotoRepository photoRepository;
 
   /**
-   * This constructor creates a PhotoRepository object.
+   * This constructor initializes a PhotoRepository object.
    * @param photoRepository is a PhotoRepository object.
    */
   @Autowired
@@ -32,10 +29,10 @@ public class PhotoService {
   }
 
   /**
-   * Saves a new photo associated with a specific event into the picMe database.
+   * Saves a new photo associated with a specific event into the PicMe database.
    * @param photo is a new photo object.
    * @param event is the event a photo was taken at.
-   * @return A Saved Photo.
+   * @return A saved Photo.
    */
   public Photo save(Photo photo, Event event) {
 
@@ -46,7 +43,7 @@ public class PhotoService {
   }
 
   /**
-   * Delets a specific photo.
+   * Deletes a specific photo.
    * @param photo is the photo that is being deleted.
    * @param id is the primary key of the photo that is being deleted.
    */
@@ -59,7 +56,7 @@ public class PhotoService {
   /**
    * Gets all the photos associated with a user.
    * @param user is the person who took the photo.
-   * @return A collection of photos that a user has taken.
+   * @return A list of photos that a user has taken.
    */
  public List<Photo> getAllPhotosByUser(User user) {
     return photoRepository.findPhotosByUser(user);

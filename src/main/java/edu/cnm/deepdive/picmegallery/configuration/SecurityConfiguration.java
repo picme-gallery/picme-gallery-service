@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public JwtDecoder jwtDecoder(){
+  public JwtDecoder jwtDecoder() {
     NimbusJwtDecoder decoder = (NimbusJwtDecoder) JwtDecoders.fromIssuerLocation(issuerUri);
     OAuth2TokenValidator<Jwt> audienceValidator =
         new JwtClaimValidator<List<String>>(JwtClaimNames.AUD, (aud) -> aud.contains(clientId));
@@ -59,6 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     OAuth2TokenValidator<Jwt> combinedValidator =
         new DelegatingOAuth2TokenValidator<Jwt>(withIssuer, audienceValidator);
     decoder.setJwtValidator(combinedValidator);
-    return  decoder;
+    return decoder;
   }
 }
