@@ -25,11 +25,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Event is a @Entity class with the following fields {@link ##id}, {@link ##name}, {@link ##address},
- * {@link ##description}, {@link ##time}, {@link ##latitude}, {@link ##longitude}, {@link ##passkey},
- * {@link ##photos}
+ * Event is a @Entity class with the following fields id, name, address,
+ * description, time, latitude, longitude, passkey, and photos.
  * All of the fields in this class are attributes of Event and help form the structure of the PicMe Gallery database.
- *
  */
 
 @SuppressWarnings("JpaDataSourceORMInspection")

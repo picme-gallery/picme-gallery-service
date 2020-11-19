@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * This interface extends the {@link JpaRepository} and Event entity.
  * This interface handles searching for events using different parameters including id, event name,
- *  address, time, latitude, longitude. It also, allows us to get access to a specific event with {@link
- *  ##findByIdAndPasskey(Long, String)}. Furthermore, we can delete an event too.
+ *  address, time, latitude, longitude. It also, allows us to get access to a specific event with
+ *  findByIdAndPasskey(Long, String)}. Furthermore, we can delete an event too.
  */
 public interface EventRepository extends JpaRepository<Event, Long> {
 
@@ -25,7 +25,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
   Optional<Event> findByName(String name);
 
   /**
-   * This JPA hibernate query allows users to find an event by its name & address.
+   * This JPA hibernate query allows users to find an event by its name and address.
    * @param name is one input parameter for this query, type String.
    * @param address is one input parameter for this query, type String.
    * @return this optionally returns an Event, if it matches by name, if not it doesn't return an Event.
@@ -63,7 +63,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
   Optional<Event> findByIdAndPasskey(long id, String passkey);
 
   /**
-   * This Jpa hibernate query allows users to find all events they're a part of
+   *
+   *This Jpa hibernate query allows users to find all events they're a part of
+   * @param user is a User object
    * @return a list of events
    */
    List<Event> findEventsByUser(User user);

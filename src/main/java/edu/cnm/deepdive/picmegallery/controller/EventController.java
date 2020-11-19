@@ -59,7 +59,7 @@ public class EventController {
   /**
    * This get method returns access to an Event in the PicMe Database, for those who did not
    * originate the Event.
-   *
+   * @param auth  is the associated Authentication object.
    * @param id      is the associated Event id.
    * @param passkey is the associated passkey.
    * @return access to the specified Event in the PicMeDatabase.
@@ -118,8 +118,9 @@ public class EventController {
 
   /**
    * This method gets all Events in the PicMeDatabase for a specified User.
-   *
-   * @return a List of Events in the PicMeDatabase for a specified User
+   * @param user is a User object.
+   * @param auth is an Authentication object.
+   * @return a list of events associated with a specific User.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Event> getAllUserEvents(User user, Authentication auth) {
@@ -128,7 +129,8 @@ public class EventController {
 
   /**
    * This delete method deletes an event by the specified event id.
-   * @param id    the primary key associated with the specific event object.
+   * @param id  the primary key associated with the specific event object.
+   * @param auth is an Authentication object.
    */
   @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void delete(@PathVariable long id, Authentication auth) {

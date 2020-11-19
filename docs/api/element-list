@@ -1,0 +1,6 @@
+edu.cnm.deepdive.picmegallery
+edu.cnm.deepdive.picmegallery.configuration
+edu.cnm.deepdive.picmegallery.controller
+edu.cnm.deepdive.picmegallery.model.dao
+edu.cnm.deepdive.picmegallery.model.entity
+edu.cnm.deepdive.picmegallery.service

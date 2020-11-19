@@ -25,8 +25,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 /**
- * User is a @Entity class with the following fields {@link ##id}, {@link ##created}, {@link ##updated},
- * {@link ##connected}, {@link ##displayName}, and {@link ##oauthKey}.
+ * User is a @Entity class with the following fields id, created, updated,
+ * connected, displayName, and oauthKey.
  * All of the fields in this class are attributes of User and help form the structure of the PicMe Gallery database.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -46,7 +46,7 @@ public class User {
   private Long id;
 
   /**
-   * This field is the timestap of when the User is created.
+   * This field is the timestamp of when the User is created.
    */
   // Created timestamp of when the user entity is created, to be used later
   @NonNull

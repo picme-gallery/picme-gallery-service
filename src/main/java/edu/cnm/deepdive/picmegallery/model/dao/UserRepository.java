@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * User repository is an interface class that extends {@Link} JpaRepository and User entity
+ * User repository is an interface class that extends JpaRepository and User entity
  * This interface handles searching for users by different parameters including Google Oauth Key 2.0,
  * events, photos, and display names.
  */

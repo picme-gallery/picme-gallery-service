@@ -18,8 +18,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Photo is a @Entity class with the following fields {@link ##id}, {@link ##event}, {@link ##uploaded},
- * {@link ##longitude}, {@link ##latitude}, {@link ##uploaded}, {@link ##caption}
+ * Photo is a @Entity class with the following fields id, event, uploaded,
+ * longitude, latitude, uploaded, and caption.
  * All of the fields in this class are attributes of Photo and help form the structure of the PicMe Gallery database.
  */
 @SuppressWarnings("JpaDataSourceORMInspection")
