@@ -13,7 +13,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 /**
- * The class is an @Service class that implements
+ * The class is an @Service class that implements a converter that converts a java web token to
+ * a authentication token for the user.
  */
 
 @Service
@@ -25,8 +26,7 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
   private final UserRepository userRepository;
 
   /**
-   * This Constructor creates an
-   * UserRepository object.
+   * This Constructor creates a UserRepository object.
    * UserRepository is a UserRepository object.
    */
   @Autowired
@@ -34,6 +34,12 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
     this.userRepository = userRepository;
   }
 
+  /**
+   *  Searches for a user with an Oauth Key and then makes a new user with an OathKey if it cannot find.
+   * @param oauthKey This is an Oauth key assigned to user.
+   * @param userName This is a display name assigned to a user.
+   * @return Returns a saved user from user repository.
+   */
   public User getOrCreate(String oauthKey, String userName) {
     return userRepository.findFirstByOauthKey(oauthKey)
         .orElseGet(() -> {
@@ -45,6 +51,11 @@ public class UserService implements Converter<Jwt, UsernamePasswordAuthenticatio
         });
   }
 
+  /**
+   * This is a helper method that converts a Jwt to grant authority to a user via a UsernamePasswordAuthenticationToken.
+   * @param jwt is the converted Json web token.
+   * @return Returns a new Jwt to user.
+   */
   @Override
   public UsernamePasswordAuthenticationToken convert(Jwt jwt) {
     Collection<SimpleGrantedAuthority> grants =
