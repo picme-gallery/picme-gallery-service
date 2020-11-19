@@ -74,6 +74,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
    */
   void deleteEventById(Long id);
 
-
+  /**
+   * This query finds an Event by the user that posted it and the event id.
+   * @param id is the primary key for event.
+   * @param user is a User object.
+   * @return An event associated with the user that created the event.
+   */
   Optional<Event> findByIdAndUser(long id, User user);
 }

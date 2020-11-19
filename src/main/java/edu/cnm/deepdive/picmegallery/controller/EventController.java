@@ -95,7 +95,7 @@ public class EventController {
   }
 
   @DeleteMapping(value = {"/{id}/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void delete(@RequestBody Event event, Long id) {
+  public void delete(@RequestBody Event event, long id) {
     eventService.delete(event, id);
   }
 }

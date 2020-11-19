@@ -37,10 +37,4 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
   Optional<Photo> findPhotoByLatitudeAndLongitude(Double latitude, Double longitude);
 
 
-
-//  /**
-//   * Deletes all the photos associated with an event.
-//   * @param iterable
-//   */
-//  void deleteAll(Iterable<? extends Photo> iterable);
 }
