@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.picmegallery.model.dao;
 
-import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.Date;

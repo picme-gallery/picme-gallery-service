@@ -35,7 +35,6 @@ public class EventController {
 
   /**
    * This Constructor creates an EventService object.
-   *
    * @param eventService is an EventService object.
    */
   @Autowired
