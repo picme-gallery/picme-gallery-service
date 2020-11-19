@@ -19,22 +19,48 @@ import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
+/**
+ * This class contains our configuration for the web security on the server-side through google
+ * Oauth 2.0
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+  /**
+   * This is a field of our UserService class.
+   */
   private final UserService userService;
+  /**
+   * This is the Uri for google, the site we run our authentication through.
+   */
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String issuerUri;
+  /**
+   * The clientId associated to the web service side of our Google Oauth2.0 on the Google Cloud
+   * Console
+   */
   @Value("${spring.security.oauth2.resourceserver.jwt.client-id}")
   private String clientId;
 
+  /**
+   * Constructor of our securityConfiguration, utilizing the userService.
+   *
+   * @param userService UserService which holds the logic for authentication from Jwt.
+   */
   @Autowired
   public SecurityConfiguration(UserService userService) {
     this.userService = userService;
   }
 
 
+  /**
+   * This method configures the http security protocol with the jwt and the converter in user
+   * Service.
+   *
+   * @param http an HttpSecurity object
+   * @throws Exception that is thrown when the user is not authenticated.
+   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -50,6 +76,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .jwtAuthenticationConverter(userService);
   }
 
+  /**
+   * a decoder method that takes the Oauth2.0 validation token and decodes it from the issuerUri, in
+   * our case google. Then it checks the validation token against those in Google's record on the
+   * google cloud console. If the clientId and the Google cloud console issuerUri match up then it
+   * returns a validated decoder.
+   *
+   * @return a JwtDecoder object.
+   */
   @Bean
   public JwtDecoder jwtDecoder() {
     NimbusJwtDecoder decoder = (NimbusJwtDecoder) JwtDecoders.fromIssuerLocation(issuerUri);
