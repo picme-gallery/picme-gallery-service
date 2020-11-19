@@ -31,17 +31,9 @@ public class EventService {
   /**
    * This is a method to save an Event object
    * @param event is the new event being created
-   * @param user is the user creating an event
-   * @param passkey is the event password that the user sets for the new event
-   * @param name is the name of the new event being created
    * @return an Event that is saved.
    */
-  public Event save(Event event, User user, String passkey, String name) {
-    if (event.getId() == null || event.getId() == 0) {
-      event.setUser(user);
-      event.setPasskey(passkey);
-      event.setName(name);
-    }
+  public Event save(Event event) {
     return eventRepository.save(event);
   }
 
