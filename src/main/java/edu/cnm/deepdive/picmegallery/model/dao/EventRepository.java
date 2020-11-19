@@ -34,7 +34,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
   /**
    * This JPA hibernate query allows users to find an event by the time the event was created.
-   * @param time is one input parameter for this query, type String.
+   * @param time is one input parameter for this query, type Date.
    * @return this optionally returns an Event, if it matches by the time query, if not it doesn't return.
    */
   Optional<Event> findByTime(Date time);
@@ -56,7 +56,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
   /**
    * This Jpa hibernate query allows users to find an event by the id and passkey.
-   * @param id is an input parameter for this query, type String.
+   * @param id is an input parameter for this query, type Long.
    * @param passkey is an input parameter for this query, type String.
    * @return this optionally returns an Event, if it matches the
    */

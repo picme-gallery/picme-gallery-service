@@ -40,7 +40,7 @@ public class EventService {
     return eventRepository.findEventsByUser(user);
   }
 
-  public void delete(Event event, Long id) {
+  public void delete(Event event, long id) {
     if (event.getId().equals(id)) {
       eventRepository.delete(event);
     }

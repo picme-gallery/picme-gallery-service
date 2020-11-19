@@ -68,7 +68,7 @@ public class EventController {
   }
 
   @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event get(@PathVariable long id,Authentication auth){
+  public Event getEventForCreator(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .orElseThrow(NoSuchElementException::new);
   }
@@ -81,13 +81,13 @@ public class EventController {
   }
 
   @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Photo> getPhotos(@PathVariable long id,Authentication auth){
+  public List<Photo> getPhotosForCreator(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .map(Event::getPhotos)
         .orElseThrow(NoSuchElementException::new);
   }
   /**
-   * This method gets all Events in the PicMeDatabase for a spscified User.
+   * This method gets all Events in the PicMeDatabase for a specified User.
    * @return
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
