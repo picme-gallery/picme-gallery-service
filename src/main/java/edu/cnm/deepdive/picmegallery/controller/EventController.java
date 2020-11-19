@@ -72,8 +72,8 @@ public class EventController {
    * @param auth the authentication object
    * @return the event for the creator.
    */
-  @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event get(@PathVariable long id,Authentication auth){
+  @GetMapping(value = {"/{id}/creator"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Event getEvent(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .orElseThrow(NoSuchElementException::new);
   }
@@ -99,7 +99,7 @@ public class EventController {
    * @param auth the auth object and source of authentication for a specified user.
    * @return a List of photos
    */
-  @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = {"/{id}/photos/creator"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Photo> getPhotos(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .map(Event::getPhotos)
