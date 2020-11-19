@@ -1,9 +1,11 @@
 package edu.cnm.deepdive.picmegallery.controller;
 
 import edu.cnm.deepdive.picmegallery.model.entity.Event;
+import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.EventService;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,11 +61,31 @@ public class EventController {
    * @param passkey is the associated passkey.
    * @return access to the specified Event in the PicMeDatabase.
    */
-  @GetMapping(value = {"/{id}/{passkey}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Optional<Event> get(@PathVariable Long id, @PathVariable String passkey){
-    return eventService.get(id, passkey);
+  @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Event get(@PathVariable long id, @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth){
+    return eventService.get(id, passkey)
+        .orElseThrow(NoSuchElementException::new);
   }
 
+  @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Event get(@PathVariable long id,Authentication auth){
+    return eventService.get(id, (User) auth.getPrincipal())
+        .orElseThrow(NoSuchElementException::new);
+  }
+
+  @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Photo> getPhotos(@PathVariable long id, @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth){
+    return eventService.get(id, passkey)
+        .map(Event::getPhotos)
+        .orElseThrow(NoSuchElementException::new);
+  }
+
+  @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Photo> getPhotos(@PathVariable long id,Authentication auth){
+    return eventService.get(id, (User) auth.getPrincipal())
+        .map(Event::getPhotos)
+        .orElseThrow(NoSuchElementException::new);
+  }
   /**
    * This method gets all Events in the PicMeDatabase for a spscified User.
    * @return

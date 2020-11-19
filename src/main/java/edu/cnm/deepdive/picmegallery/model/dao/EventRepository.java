@@ -16,12 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-  /**
-   * This JPA hibernate query allows users to find an event by a specified Id.
-   * @param id the input parameter for this query is a Long id.
-   * @return this optionally returns an Event, if it matches by Id, if not it doesn't return an Event.
-   */
-  Optional<Event> findById(Long id);
 
   /**
    * This JPA hibernate query allows users to find an event by its name.
@@ -66,7 +60,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
    * @param passkey is an input parameter for this query, type String.
    * @return this optionally returns an Event, if it matches the
    */
-  Optional<Event> findByIdAndPasskey(Long id, String passkey);
+  Optional<Event> findByIdAndPasskey(long id, String passkey);
 
   /**
    * This Jpa hibernate query allows users to find all events they're a part of
@@ -80,4 +74,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
    */
   void deleteEventById(Long id);
 
+
+  Optional<Event> findByIdAndUser(long id, User user);
 }

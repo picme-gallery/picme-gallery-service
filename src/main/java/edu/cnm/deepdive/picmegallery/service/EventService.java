@@ -27,9 +27,13 @@ public class EventService {
     return eventRepository.save(event);
   }
 
-  public Optional<Event> get(Long id, String passkey) {
+  public Optional<Event> get(long id, String passkey) {
     return eventRepository.findByIdAndPasskey(id, passkey);
 
+  }
+
+  public Optional<Event> get(long id, User user) {
+    return eventRepository.findByIdAndUser(id, user);
   }
 
   public List<Event> getAllUserEvents(User user) {
