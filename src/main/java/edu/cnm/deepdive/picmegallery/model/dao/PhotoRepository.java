@@ -13,19 +13,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
-  /**
-   * Finds photos by the event that they are associated with.
-   * @param event is an Event object.
-   * @return A collection of photos associated with an event.
-   */
-  Optional <List<Photo>> findPhotosByEvent(Event event);
 
   /**
-   * Finds a Photo that it is associated with a user.
+   * Finds the photos that are associated with a user.
    * @param user The user that took the photo.
-   * @return A photo associated with a specific user.
+   * @return A collection of photos associated with a specific user.
    */
-  Optional<Photo> findPhotosByUser(User user);
+  List<Photo> findPhotosByUser(User user);
 
   /**
    * Finds a Photo by the the time stamp that is created when a photo is uploaded.
@@ -42,24 +36,5 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
    */
   Optional<Photo> findPhotoByLatitudeAndLongitude(Double latitude, Double longitude);
 
-  /**
-   * Finds a photo by id.
-   * @param id The primary key.
-   * @return A Specific Photo associated to the primary key
-   */
-  Optional<Photo> findPhotoById(Long id);
 
-
-  /**
-   * Gets all the photos that are associated with an event.
-   * @param event_id the primary key of an event.
-   * @return A list of photos that are associated with an event
-   */
-  List<Photo> findAllByEvent_Id(Long event_id);
-
-//  /**
-//   * Deletes all the photos associated with an event.
-//   * @param iterable
-//   */
-//  void deleteAll(Iterable<? extends Photo> iterable);
 }

@@ -16,12 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-  /**
-   * This JPA hibernate query allows users to find an event by a specified Id.
-   * @param id the input parameter for this query is a Long id.
-   * @return this optionally returns an Event, if it matches by Id, if not it doesn't return an Event.
-   */
-  Optional<Event> findById(Long id);
 
   /**
    * This JPA hibernate query allows users to find an event by its name.
@@ -40,7 +34,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
   /**
    * This JPA hibernate query allows users to find an event by the time the event was created.
-   * @param time is one input parameter for this query, type String.
+   * @param time is one input parameter for this query, type Date.
    * @return this optionally returns an Event, if it matches by the time query, if not it doesn't return.
    */
   Optional<Event> findByTime(Date time);
@@ -62,11 +56,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
   /**
    * This Jpa hibernate query allows users to find an event by the id and passkey.
-   * @param id is an input parameter for this query, type String.
+   * @param id is an input parameter for this query, type Long.
    * @param passkey is an input parameter for this query, type String.
    * @return this optionally returns an Event, if it matches the
    */
-  Optional<Event> findByIdAndPasskey(Long id, String passkey);
+  Optional<Event> findByIdAndPasskey(long id, String passkey);
 
   /**
    * This Jpa hibernate query allows users to find all events they're a part of
@@ -80,4 +74,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
    */
   void deleteEventById(Long id);
 
+  /**
+   * This query finds an Event by the user that posted it and the event id.
+   * @param id is the primary key for event.
+   * @param user is a User object.
+   * @return An event associated with the user that created the event.
+   */
+  Optional<Event> findByIdAndUser(long id, User user);
 }
