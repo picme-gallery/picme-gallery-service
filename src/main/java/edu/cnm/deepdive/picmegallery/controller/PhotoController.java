@@ -58,8 +58,8 @@ public class PhotoController {
    * @param id is a Photo objects primary key.
    */
   @DeleteMapping(value = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void delete(@RequestBody Photo photo, Long id) {
-    photoService.delete(photo, id);
+  public void delete(@RequestBody Photo photo, long id) {
+  photoService.delete(photo, id);
   }
 
   /**
@@ -68,8 +68,8 @@ public class PhotoController {
    * @return A Collection of Photos associated with a user
    */
   @GetMapping(value = {"/{user}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Photo> get (@PathVariable User user){
-    photoService.getAllPhotosByUser(user);
+  public List<Photo> getAllPhotosByUser (@PathVariable User user){
+     return photoService.getAllPhotosByUser(user);
   }
 
 }
