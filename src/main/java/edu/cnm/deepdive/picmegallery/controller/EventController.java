@@ -67,7 +67,7 @@ public class EventController {
   }
 
   /**
-   * This method gets the event specified for the User who created/ originated the event.
+   * This method gets the event specified for the User who created the event.
    * @param id the associated event id
    * @param auth the authentication object
    * @return the event for the creator.
