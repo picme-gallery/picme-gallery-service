@@ -12,11 +12,23 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+/**
+ * The class is an @Service class that implements
+ */
+
 @Service
 public class UserService implements Converter<Jwt, UsernamePasswordAuthenticationToken> {
-
+/**
+ *
+ This private final field is a reference to UserRepository.
+  */
   private final UserRepository userRepository;
 
+  /**
+   * This Constructor creates an
+   * UserRepository object.
+   * UserRepository is a UserRepository object.
+   */
   @Autowired
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
