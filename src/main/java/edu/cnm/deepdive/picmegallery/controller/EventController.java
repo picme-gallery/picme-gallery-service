@@ -67,13 +67,13 @@ public class EventController {
   }
 
   /**
-   * This method gets the event specified for the User who created the event.
+   * This method gets the event specified for the User who created this event.
    * @param id the associated event id
    * @param auth the authentication object
    * @return the event for the creator.
    */
   @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event getEvent(@PathVariable long id,Authentication auth){
+  public Event get(@PathVariable long id,Authentication auth){
     return eventService.get(id, (User) auth.getPrincipal())
         .orElseThrow(NoSuchElementException::new);
   }
