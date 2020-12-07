@@ -5,6 +5,7 @@ import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -47,14 +48,20 @@ public class PhotoService {
   /**
    * Deletes a specific photo.
    * @param photo is the photo that is being deleted.
-   * @param id is the primary key of the photo that is being deleted.
+
    */
-  public void delete(Photo photo, Long id) {
-    if (photo.getId().equals(id)) {
+  public void delete(Photo photo, User user) {
+
+    if (user.getId().equals(photo.getUser().getId())) {
       photoRepository.delete(photo);
+    } else {
+      throw new ForbiddenException();
     }
   }
 
+  public Optional<Photo> get(long id){
+    return photoRepository.findById(id);
+  }
   /**
    * Gets all the photos associated with a user.
    * @param user is the person who took the photo.
@@ -74,4 +81,13 @@ public class PhotoService {
 
   }
 
+  public static class ForbiddenException extends ResponseStatusException {
+
+    private static final String REASON = "Operation not allowed";
+
+    public ForbiddenException() {
+      super(HttpStatus.FORBIDDEN, REASON);
+    }
+
+  }
 }
