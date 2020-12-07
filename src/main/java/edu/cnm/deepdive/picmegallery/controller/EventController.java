@@ -89,9 +89,9 @@ public class EventController {
    * This method gets the photos associated with an Event in the PicMe Database, for those who did
    * not originate the Event. Hence a passkey is required.
    *
-   * @param id      id the primary key associated with the specific event object.
+   * @param id id the primary key associated with the specific event object.
    * @param passkey is the associated passkey for an event.
-   * @param auth    auth the auth object and source of authentication for a specified user.
+   * @param auth auth the auth object and source of authentication for a specified user.
    * @return a List of photos
    */
   @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,7 +106,7 @@ public class EventController {
    * This method gets the photos associated with an Event in the PicMe Database, for the Event
    * originator/creator.
    *
-   * @param id   the primary key associated with the specific event object.
+   * @param id the primary key associated with the specific event object.
    * @param auth the auth object and source of authentication for a specified user.
    * @return a List of photos
    */

@@ -49,7 +49,7 @@ public class User {
    * This field is the timestamp of when the User is created.
    */
   // Created timestamp of when the user entity is created, to be used later
-  @NonNull
+  @Column(nullable = false)
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date created;
@@ -58,7 +58,7 @@ public class User {
    * Timestamp of when the user profile is updated.
    */
   // Time that user profile is updated
-  @NonNull
+  @Column(nullable = false)
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   private Date updated;
@@ -67,7 +67,7 @@ public class User {
    * Timestamp of when the user last connected to our service.
    */
   // Time that user profile connects to our service
-  @NonNull
+  @Column(nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date connected;
 
@@ -75,17 +75,15 @@ public class User {
    * User's display name.
    */
   // Customizable user display name, default is set from google account
-  @NonNull
-  @Column(name = "display_name")
+  @Column(name = "display_name", nullable = false)
   private String displayName;
 
   /**
    * Oauth 2.0 key from Google.
    */
   // Google sign in
-  @NonNull
   @JsonIgnore
-  @Column(name = "oauth_key" )
+  @Column(name = "oauth_key",nullable = false )
   private String oauthKey;
 
   /**
@@ -134,7 +132,6 @@ public class User {
    * Gets the date a User is created in our application.
    * @return
    */
-  @NonNull
   public Date getCreated() {
     return created;
   }
@@ -143,7 +140,6 @@ public class User {
    * Gets the time/date a User profile is updated.
    * @return
    */
-  @NonNull
   public Date getUpdated() {
     return updated;
   }
@@ -152,7 +148,6 @@ public class User {
    * Gets the last time a User connected to the PicME service
    * @return
    */
-  @NonNull
   public Date getConnected() {
     return connected;
   }
@@ -161,7 +156,7 @@ public class User {
    * Sets or updates the time the User connected last to our service
    * @param connected
    */
-  public void setConnected(@NonNull Date connected) {
+  public void setConnected( Date connected) {
     this.connected = connected;
   }
 
@@ -170,7 +165,6 @@ public class User {
    * with their Google account
    * @return
    */
-  @NonNull
   public String getDisplayName() {
     return displayName;
   }
@@ -180,7 +174,7 @@ public class User {
    * their Google account
    * @param displayName
    */
-  public void setDisplayName(@NonNull String displayName) {
+  public void setDisplayName( String displayName) {
     this.displayName = displayName;
   }
 
@@ -188,7 +182,6 @@ public class User {
    * Gets the User's oauth key they used to sign in and access PicMe Gallery's services
    * @return
    */
-  @NonNull
   public String getOauthKey() {
     return oauthKey;
   }
@@ -197,7 +190,7 @@ public class User {
    * Sets or allows us to update the User's OauthKey if they modify their Google Account
    * @param oauthKey
    */
-  public void setOauthKey(@NonNull String oauthKey) {
+  public void setOauthKey( String oauthKey) {
     this.oauthKey = oauthKey;
   }
 

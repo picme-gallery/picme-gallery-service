@@ -43,7 +43,7 @@ public class Photo {
    */
   // Ties an Event Entity within our database
   // FK to help id which event a photo is associated with
-  @NonNull
+
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "event_id", nullable = false, updatable = false)
   private Event event;
@@ -53,7 +53,7 @@ public class Photo {
    */
   // Ties a User Entity within our database
   // FK to help id which user is associated with a photo
-  @NonNull
+
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "user_id", nullable = false, updatable = false)
   private User user;
@@ -85,9 +85,10 @@ public class Photo {
    * This field is a time stamp to see when a user uploaded a photo.
    */
   // A time stamp to see when a user uploaded a photo
-  @NonNull
+
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false)
   private Date uploaded;
 
   /**
@@ -181,7 +182,6 @@ public class Photo {
    * Gets the time stamp of when a photo is uploaded.
    * @return the time stamp of when a photo is uploaded.
    */
-  @NonNull
   public Date getUploaded() {
     return uploaded;
   }
