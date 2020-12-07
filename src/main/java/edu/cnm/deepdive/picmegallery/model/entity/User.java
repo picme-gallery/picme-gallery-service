@@ -82,7 +82,7 @@ public class User {
    */
   // Google sign in
   @JsonIgnore
-  @Column(name = "oauth_key",nullable = false )
+  @Column(name = "oauth_key", nullable = false )
   private String oauthKey;
 
   /**

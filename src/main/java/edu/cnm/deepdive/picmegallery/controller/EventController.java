@@ -55,6 +55,7 @@ public class EventController {
    * @return the created Event.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
   public Event post(@RequestBody Event event, Authentication auth) {
     event.setUser((User) auth.getPrincipal());
     return eventService.save(event);
@@ -128,7 +129,7 @@ public class EventController {
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Event> getAllUserEvents(User user, Authentication auth) {
-    return eventService.getAllUserEvents(user);
+      return eventService.getAllUserEvents(user);
   }
 
   /**
@@ -143,7 +144,7 @@ public class EventController {
         .ifPresentOrElse(
             eventService::delete,
             () -> {
-              throw new NoSuchElementException();
+              throw new EventNotFoundException();
             }
         );
   }

@@ -52,14 +52,17 @@ public class PhotoController {
    * @return A saved photo.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Photo post(@RequestBody Photo photo, Event event) {
+  @ResponseStatus(HttpStatus.CREATED)
+  public Photo post(@RequestBody Photo photo, Event event, Authentication auth) {
+    photo.setUser((User)auth.getPrincipal());
     return photoService.save(photo, event);
 
   }
 
   /**
    * Deletes a photo associated with a specific primary key.
-   * @param id    is a Photo objects primary key.
+   * @param auth , is the Authentication object used for authentication, converted with Jwt.
+   * @param id is a Photo objects primary key.
    */
   @DeleteMapping(value = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -78,7 +81,6 @@ public class PhotoController {
   @GetMapping(value = {"/{user}"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Photo> getAllPhotosByUser(@PathVariable User user) {
     return photoService.getAllPhotosByUser(user);
-
   }
 
 }
