@@ -67,7 +67,6 @@ public class User {
    * Timestamp of when the user last connected to our service.
    */
   // Time that user profile connects to our service
-  @Column(nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date connected;
 
@@ -75,7 +74,7 @@ public class User {
    * User's display name.
    */
   // Customizable user display name, default is set from google account
-  @Column(name = "display_name", nullable = false)
+  @Column(name = "display_name")
   private String displayName;
 
   /**

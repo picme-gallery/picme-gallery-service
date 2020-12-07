@@ -6,7 +6,9 @@ import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This is a @Service class and holds the additional logic for the queries involving a photo in the PicMe database.
@@ -61,5 +63,15 @@ public class PhotoService {
  public List<Photo> getAllPhotosByUser(User user) {
     return photoRepository.findPhotosByUser(user);
  }
+
+  public static class PhotoNotFoundException extends ResponseStatusException {
+
+    private static final String NOT_FOUND_REASON = "Photo not found";
+
+    public PhotoNotFoundException() {
+      super(HttpStatus.NOT_FOUND, NOT_FOUND_REASON);
+    }
+
+  }
 
 }

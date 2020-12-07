@@ -42,4 +42,5 @@ public class UserController {
     return (User) auth.getPrincipal();
   }
 
+
 }

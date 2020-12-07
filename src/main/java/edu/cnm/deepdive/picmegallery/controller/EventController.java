@@ -4,6 +4,7 @@ import edu.cnm.deepdive.picmegallery.model.entity.Event;
 import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.EventService;
+import edu.cnm.deepdive.picmegallery.service.EventService.EventNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * This Class is a @RestController that handles the endpoints for communication between the client
  * side to the serverside for the Events.
  */
+@RestControllerAdvice
 @RestController
 @RequestMapping("/events")
 @ExposesResourceFor(Event.class)
@@ -69,7 +72,7 @@ public class EventController {
   public Event get(@PathVariable long id,
       @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
     return eventService.get(id, passkey)
-        .orElseThrow(NoSuchElementException::new);
+        .orElseThrow(EventNotFoundException::new);
   }
 
   /**
@@ -82,7 +85,7 @@ public class EventController {
   @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Creator")
   public Event getEvent(@PathVariable long id, Authentication auth) {
     return eventService.get(id, (User) auth.getPrincipal())
-        .orElseThrow(NoSuchElementException::new);
+        .orElseThrow(EventNotFoundException::new);
   }
 
   /**
