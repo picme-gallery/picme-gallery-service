@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -90,6 +91,15 @@ public class Photo {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false)
   private Date uploaded;
+
+  @NonNull
+  @Column(nullable = false, updatable = false)
+  @JsonIgnore
+  private String path;
+
+  @NonNull
+  @Column(nullable = false, updatable = false)
+  private String contentType;
 
   /**
    * Gets the Photo id
@@ -186,4 +196,21 @@ public class Photo {
     return uploaded;
   }
 
+  @NonNull
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(@NonNull String path) {
+    this.path = path;
+  }
+
+  @NonNull
+  public String getContentType() {
+    return contentType;
+  }
+
+  public void setContentType(@NonNull String contentType) {
+    this.contentType = contentType;
+  }
 }
