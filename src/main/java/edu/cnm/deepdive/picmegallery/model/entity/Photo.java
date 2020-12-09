@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.net.URI;
 import java.util.Date;
 import javax.persistence.Column;

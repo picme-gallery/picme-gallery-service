@@ -7,7 +7,6 @@ import edu.cnm.deepdive.picmegallery.service.EventService;
 import edu.cnm.deepdive.picmegallery.service.EventService.EventNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
