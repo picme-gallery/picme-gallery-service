@@ -60,13 +60,16 @@ public class EventService {
     return eventRepository.findByIdAndUser(id, user);
   }
 
+  public Optional<Event> getByName(String name, String passkey) {
+    return eventRepository.findByNameAndPasskey(name, passkey);
+  }
   /**
    *This gets all the Events created by a user.
    * @param user is a User object, specifically the one who created the event.
    * @return a list of Event objects, if there are any associated with the User.
    */
   public List<Event> getAllUserEvents(User user) {
-    return eventRepository.findEventsByUser(user);
+    return eventRepository.findEventsByUserOrUsersContainingOrderByTimeDesc(user, user);
   }
 
   /**

@@ -7,6 +7,7 @@ import edu.cnm.deepdive.picmegallery.service.EventService;
 import edu.cnm.deepdive.picmegallery.service.EventService.EventNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -114,7 +115,7 @@ public class EventController {
    * @param auth the auth object and source of authentication for a specified user.
    * @return a List of photos
    */
-  @GetMapping(value = {"/{id}/photos/creator"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE, params = {"creator"})
   public List<Photo> getPhotos(@PathVariable long id, Authentication auth) {
     return eventService.get(id, (User) auth.getPrincipal())
         .map(Event::getPhotos)
@@ -123,13 +124,19 @@ public class EventController {
 
   /**
    * This method gets all Events in the PicMeDatabase for a specified User.
-   * @param user is a User object.
    * @param auth is an Authentication object.
    * @return a list of events associated with a specific User.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Event> getAllUserEvents(User user, Authentication auth) {
-      return eventService.getAllUserEvents(user);
+  public List<Event> getAllUserEvents( Authentication auth) {
+      return eventService.getAllUserEvents((User)auth.getPrincipal());
+  }
+
+  @GetMapping(value = {"events/{name}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Event getEventByName(@PathVariable String name,
+      @RequestHeader(value = "Passkey") String passkey, Authentication auth) {
+    return eventService.getByName(name, passkey)
+        .orElseThrow(EventNotFoundException::new);
   }
 
   /**
@@ -148,4 +155,6 @@ public class EventController {
             }
         );
   }
+
+
 }

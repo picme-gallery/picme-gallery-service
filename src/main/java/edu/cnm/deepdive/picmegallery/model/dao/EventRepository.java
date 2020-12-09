@@ -20,9 +20,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
   /**
    * This JPA hibernate query allows users to find an event by its name.
    * @param name is the input parameter for this query, type String.
+   * @param passkey is the password for access to an event.
    * @return this optionally returns an Event, if it matches by name, if not it doesn't return an Event.
    */
-  Optional<Event> findByName(String name);
+  Optional<Event> findByNameAndPasskey(String name, String passkey);
 
   /**
    * This JPA hibernate query allows users to find an event by its name and address.
@@ -68,7 +69,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
    * @param user is a User object
    * @return a list of events
    */
-   List<Event> findEventsByUser(User user);
+   List<Event> findEventsByUserOrUsersContainingOrderByTimeDesc(User creator, User user);
 
   /**
    * This query allows users to delete an event by Id
