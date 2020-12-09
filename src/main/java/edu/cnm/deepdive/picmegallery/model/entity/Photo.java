@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.net.URI;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -27,6 +29,8 @@ import org.springframework.lang.Nullable;
 @Entity
 @Table(indexes = @Index(columnList = "uploaded"))
 public class Photo {
+
+  private static EntityLinks entityLinks;
 
   /**
    * This field is the primary key for photo.
@@ -99,6 +103,10 @@ public class Photo {
   @NonNull
   @Column(nullable = false, updatable = false)
   private String contentType;
+
+  @NonNull
+  @Column(nullable = false, updatable = false)
+  private String name;
 
   /**
    * Gets the Photo id
@@ -212,5 +220,24 @@ public class Photo {
 
   public void setContentType(@NonNull String contentType) {
     this.contentType = contentType;
+  }
+
+  @NonNull
+  public String getName() {
+    return name;
+  }
+
+  public void setName(@NonNull String name) {
+    this.name = name;
+  }
+
+  /////////////////////////////////////
+  //get hrefs
+  /**
+   * Returns the location of REST resource representation of this image.
+   */
+  public URI getHref() {
+    //noinspection ConstantConditions
+    return (id != null) ? entityLinks.linkForItemResource(Photo.class, id).toUri() : null;
   }
 }
