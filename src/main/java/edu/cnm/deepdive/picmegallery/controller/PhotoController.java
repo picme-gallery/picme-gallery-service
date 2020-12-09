@@ -5,10 +5,12 @@ import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import edu.cnm.deepdive.picmegallery.service.PhotoService;
 import java.io.IOException;
+import edu.cnm.deepdive.picmegallery.service.PhotoService.PhotoNotFoundException;
 import java.util.List;
-import java.util.UUID;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -54,19 +56,25 @@ public class PhotoController {
    * @return A saved photo.
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Photo post(@RequestBody Photo photo, Event event) {
+  @ResponseStatus(HttpStatus.CREATED)
+  public Photo post(@RequestBody Photo photo, Event event, Authentication auth) {
+    photo.setUser((User)auth.getPrincipal());
     return photoService.save(photo, event);
 
   }
 
   /**
    * Deletes a photo associated with a specific primary key.
-   * @param photo is a Photo object.
-   * @param id    is a Photo objects primary key.
+   * @param auth , is the Authentication object used for authentication, converted with Jwt.
+   * @param id is a Photo objects primary key.
    */
   @DeleteMapping(value = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void delete(@RequestBody Photo photo, long id) {
-    photoService.delete(photo, id);
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable long id, Authentication auth) {
+    photoService.get(id)
+        .ifPresentOrElse((photo) -> photoService.delete(photo,(User) auth.getPrincipal()), () -> {
+          throw new PhotoNotFoundException();
+        });
   }
 
   /**

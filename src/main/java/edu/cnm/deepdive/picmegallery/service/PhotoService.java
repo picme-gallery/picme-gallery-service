@@ -6,13 +6,16 @@ import edu.cnm.deepdive.picmegallery.model.entity.Photo;
 import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This is a @Service class and holds the additional logic for the queries involving a photo in the PicMe database.
@@ -54,14 +57,19 @@ public class PhotoService {
   /**
    * Deletes a specific photo.
    * @param photo is the photo that is being deleted.
-   * @param id is the primary key of the photo that is being deleted.
    */
-  public void delete(Photo photo, Long id) {
-    if (photo.getId().equals(id)) {
+  public void delete(Photo photo, User user) {
+
+    if (user.getId().equals(photo.getUser().getId())) {
       photoRepository.delete(photo);
+    } else {
+      throw new ForbiddenException();
     }
   }
 
+  public Optional<Photo> get(long id){
+    return photoRepository.findById(id);
+  }
   /**
    * Gets all the photos associated with a user.
    * @param user is the person who took the photo.
@@ -71,6 +79,25 @@ public class PhotoService {
     return photoRepository.findPhotosByUser(user);
  }
 
+  public static class PhotoNotFoundException extends ResponseStatusException {
+
+    private static final String NOT_FOUND_REASON = "Photo not found";
+
+    public PhotoNotFoundException() {
+      super(HttpStatus.NOT_FOUND, NOT_FOUND_REASON);
+    }
+
+  }
+
+  public static class ForbiddenException extends ResponseStatusException {
+
+    private static final String REASON = "Operation not allowed";
+
+    public ForbiddenException() {
+      super(HttpStatus.FORBIDDEN, REASON);
+    }
+
+  }
   /**
    * Selects and returns all images.
    */

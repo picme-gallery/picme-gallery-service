@@ -10,18 +10,18 @@ create table event
     passkey     varchar(255) not null,
     time        timestamp    not null,
     updated     timestamp    not null,
-    user_id     bigint,
+    user_id     bigint       not null,
     primary key (event_id)
 );
 create table photo
 (
-    photo_id  bigint not null,
+    photo_id  bigint    not null,
     caption   varchar(255),
     latitude  double,
     longitude double,
-    uploaded  timestamp,
-    event_id  bigint not null,
-    user_id   bigint not null,
+    uploaded  timestamp not null,
+    event_id  bigint    not null,
+    user_id   bigint    not null,
     primary key (photo_id)
 );
 create table user_event
@@ -31,12 +31,12 @@ create table user_event
 );
 create table user_profile
 (
-    user_id      bigint not null,
+    user_id      bigint       not null,
     connected    timestamp,
-    created      timestamp,
+    created      timestamp    not null,
     display_name varchar(255),
-    oauth_key    varchar(255),
-    updated      timestamp,
+    oauth_key    varchar(255) not null,
+    updated      timestamp    not null,
     primary key (user_id)
 );
 create index IDX6l2ado7gywlj9aev2utqc2vxm on event (time);

@@ -6,7 +6,9 @@ import edu.cnm.deepdive.picmegallery.model.entity.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This is a @Service class and holds the additional logic for the queries involving an Event in the PicMe database.
@@ -31,17 +33,9 @@ public class EventService {
   /**
    * This is a method to save an Event object
    * @param event is the new event being created
-   * @param user is the user creating an event
-   * @param passkey is the event password that the user sets for the new event
-   * @param name is the name of the new event being created
    * @return an Event that is saved.
    */
-  public Event save(Event event, User user, String passkey, String name) {
-    if (event.getId() == null || event.getId() == 0) {
-      event.setUser(user);
-      event.setPasskey(passkey);
-      event.setName(name);
-    }
+  public Event save(Event event) {
     return eventRepository.save(event);
   }
 
@@ -66,13 +60,16 @@ public class EventService {
     return eventRepository.findByIdAndUser(id, user);
   }
 
+  public Optional<Event> getByName(String name, String passkey) {
+    return eventRepository.findByNameAndPasskey(name, passkey);
+  }
   /**
    *This gets all the Events created by a user.
    * @param user is a User object, specifically the one who created the event.
    * @return a list of Event objects, if there are any associated with the User.
    */
   public List<Event> getAllUserEvents(User user) {
-    return eventRepository.findEventsByUser(user);
+    return eventRepository.findEventsByUserOrUsersContainingOrderByTimeDesc(user, user);
   }
 
   /**
@@ -82,4 +79,15 @@ public class EventService {
   public void delete(Event event) {
       eventRepository.delete(event);
   }
+
+  public static class EventNotFoundException extends ResponseStatusException {
+
+    private static final String NOT_FOUND_REASON = "Event not found";
+
+    public EventNotFoundException() {
+      super(HttpStatus.NOT_FOUND, NOT_FOUND_REASON);
+    }
+
+  }
+
 }
