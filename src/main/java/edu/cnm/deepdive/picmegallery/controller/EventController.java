@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -77,6 +78,15 @@ public class EventController {
         .orElseThrow(EventNotFoundException::new);
   }
 
+  @GetMapping(value = {"/{name}"}, produces = MediaType.APPLICATION_JSON_VALUE,headers = {"passkey"})
+  public Event getEventByName(@PathVariable(value = "name") String name,
+      @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
+    return eventService.getByName(name, passkey)
+        .orElseThrow(EventNotFoundException::new);
+  }
+
+
+
   /**
    * This method gets the event specified for the User who created this event.
    *
@@ -132,12 +142,7 @@ public class EventController {
       return eventService.getAllUserEvents((User)auth.getPrincipal());
   }
 
-  @GetMapping(value = {"events/{name}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public Event getEventByName(@PathVariable String name,
-      @RequestHeader(value = "Passkey") String passkey, Authentication auth) {
-    return eventService.getByName(name, passkey)
-        .orElseThrow(EventNotFoundException::new);
-  }
+
 
   /**
    * This delete method deletes an event by the specified event id.
