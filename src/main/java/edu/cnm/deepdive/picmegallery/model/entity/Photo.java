@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.net.URI;
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +30,7 @@ import org.springframework.lang.Nullable;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(indexes = @Index(columnList = "uploaded"))
+@JsonInclude(Include.NON_NULL)
 public class Photo {
 
   private static EntityLinks entityLinks;
@@ -102,7 +105,7 @@ public class Photo {
   private String path;
 
   @NonNull
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false, columnDefinition = "default")
   private String contentType;
 
   @NonNull
