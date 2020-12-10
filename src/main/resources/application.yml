@@ -26,9 +26,10 @@ spring:
 #              create-target: ddl.sql
 
 server:
-  port: 8080
+  port: 8181
   servlet:
     context-path: /picme/api
+  forward-headers-strategy: framework
 
 upload:
   application-home: true
