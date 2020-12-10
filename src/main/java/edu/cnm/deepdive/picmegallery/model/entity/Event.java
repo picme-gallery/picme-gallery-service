@@ -1,4 +1,5 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -123,6 +124,7 @@ public class Event {
   @NonNull
   @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("uploaded DESC")
+  @JsonIgnore
   private final List<Photo> photos = new LinkedList<>();
 
   /**

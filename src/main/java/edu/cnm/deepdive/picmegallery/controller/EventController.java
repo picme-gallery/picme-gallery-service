@@ -77,12 +77,12 @@ public class EventController {
         .orElseThrow(EventNotFoundException::new);
   }
 
-  @GetMapping(value = {"/{name}"}, produces = MediaType.APPLICATION_JSON_VALUE,headers = {"passkey"})
-  public Event getEventByName(@PathVariable(value = "name") String name,
-      @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
-    return eventService.getByName(name, passkey)
-        .orElseThrow(EventNotFoundException::new);
-  }
+//  @GetMapping(value = {"/{name}"}, produces = MediaType.APPLICATION_JSON_VALUE,headers = {"Passkey"})
+//  public Event getEventByName(@PathVariable(value = "name") String name,
+//      @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
+//    return eventService.getByName(name, passkey)
+//        .orElseThrow(EventNotFoundException::new);
+//  }
 
 
 
@@ -99,22 +99,6 @@ public class EventController {
         .orElseThrow(EventNotFoundException::new);
   }
 
-  /**
-   * This method gets the photos associated with an Event in the PicMe Database, for those who did
-   * not originate the Event. Hence a passkey is required.
-   *
-   * @param id id the primary key associated with the specific event object.
-   * @param passkey is the associated passkey for an event.
-   * @param auth auth the auth object and source of authentication for a specified user.
-   * @return a List of photos
-   */
-  @GetMapping(value = {"/{id}/photos"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Photo> getPhotos(@PathVariable long id,
-      @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
-    return eventService.get(id, passkey)
-        .map(Event::getPhotos)
-        .orElseThrow(NoSuchElementException::new);
-  }
 
   /**
    * This method gets the photos associated with an Event in the PicMe Database, for the Event

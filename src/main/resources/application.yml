@@ -9,9 +9,9 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://accounts.google.com
-          client-id: 840657645377-6edrs5sgs8t5un8cko814ob30mpm1s87.apps.googleusercontent.com
+          client-id: 527712007465-n4efmoij6sheoca80t9n8j4ta97572bu.apps.googleusercontent.com
   datasource:
-    url: jdbc:derby:gallery_db;create=true;collation=TERRITORY_BASED:PRIMARY
+    url: jdbc:derby:picme_db;create=true;collation=TERRITORY_BASED:PRIMARY
   jpa:
     database-platform: org.hibernate.dialect.DerbyTenSevenDialect
     hibernate:
@@ -26,9 +26,9 @@ spring:
 #              create-target: ddl.sql
 
 server:
-  port: 18181
+  port: 8080
   servlet:
-    context-path: /gallery
+    context-path: /picme/api
 
 upload:
   application-home: true

@@ -7,6 +7,8 @@ import edu.cnm.deepdive.picmegallery.service.EventService;
 import edu.cnm.deepdive.picmegallery.service.PhotoService;
 import edu.cnm.deepdive.picmegallery.service.PhotoService.PhotoNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -57,6 +59,22 @@ public class PhotoController {
     this.eventService = eventService;
   }
 
+  /**
+   * This method gets the photos associated with an Event in the PicMe Database, for those who did
+   * not originate the Event. Hence a passkey is required.
+   *
+   * @param eventId id the primary key associated with the specific event object.
+   * @param passkey is the associated passkey for an event.
+   * @param auth auth the auth object and source of authentication for a specified user.
+   * @return a List of photos
+   */
+  @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE, headers = {"Passkey"})
+  public List<Photo> getPhotos(@PathVariable long eventId,
+      @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
+    return eventService.get(eventId, passkey)
+        .map(Event::getPhotos)
+        .orElseThrow(NoSuchElementException::new);
+  }
 
   /**
    * Deletes a photo associated with a specific primary key.
