@@ -1,5 +1,4 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,16 +51,15 @@ public class Event {
    * This field is the @ManyToOne relationship between Event and User.
    * This is the user associated with creating an Event entity.
    */
-  @NonNull
+
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn( name = "user_id")
+  @JoinColumn( name = "user_id", nullable = false)
   private User user;
 
   /**
    * This field is the time an event is created.
    */
   // Date stamp of when an event started
-  @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
@@ -71,7 +69,6 @@ public class Event {
    *This field is a date stamp of when an event and corresponding attributes are updated.
    */
   // Date stamp of when an event and corresponding attributes are updated
-  @NonNull
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column( nullable = false, updatable = false)
@@ -81,7 +78,6 @@ public class Event {
    * This field is the name of the event.
    */
   //Name of the event
-  @NonNull
   @Column( nullable = false)
   private String name;
 
@@ -117,7 +113,6 @@ public class Event {
    * This field is the passkey to access event
    */
   // Passkey to access event
-  @NonNull
   @Column(nullable = false)
   private String passkey;
 
@@ -152,7 +147,6 @@ public class Event {
   /**
    *  Gets the User who created the event.
    */
-  @NonNull
   public User getUser() {
     return user;
   }
@@ -160,14 +154,13 @@ public class Event {
   /**
    * Sets the sets the User who created the event.
    */
-  public void setUser(@NonNull User user) {
+  public void setUser( User user) {
     this.user = user;
   }
 
   /**
    * Gets the Event's start time
    */
-  @NonNull
   public Date getTime() {
     return time;
   }
@@ -175,7 +168,6 @@ public class Event {
   /**
    * Gets the time the Event was updated.
    */
-  @NonNull
   public Date getUpdated() {
     return updated;
   }
@@ -183,7 +175,6 @@ public class Event {
   /**
    * Gets the Event's name.
    */
-  @NonNull
   public String getName() {
     return name;
   }
@@ -191,7 +182,7 @@ public class Event {
   /**
    * Sets the Event's name.
    */
-  public void setName(@NonNull String name) {
+  public void setName( String name) {
     this.name = name;
   }
 
@@ -256,7 +247,6 @@ public class Event {
   /**
    * Gets the passkey of an Event.
    */
-  @NonNull
   public String getPasskey() {
     return passkey;
   }
@@ -264,7 +254,7 @@ public class Event {
   /**
    * Sets the passkey of an Event.
    */
-   public void setPasskey(@NonNull String passkey) {
+   public void setPasskey( String passkey) {
     this.passkey = passkey;
   }
 
