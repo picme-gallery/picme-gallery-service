@@ -1,7 +1,11 @@
 package edu.cnm.deepdive.picmegallery.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.net.URI;
 import java.util.Date;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +19,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 /**
  * Photo is a @Entity class with the following fields id, event, uploaded,
@@ -26,7 +33,11 @@ import org.springframework.lang.Nullable;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(indexes = @Index(columnList = "uploaded"))
+@JsonInclude(Include.NON_NULL)
+@Component
 public class Photo {
+
+  private static EntityLinks entityLinks;
 
   /**
    * This field is the primary key for photo.
@@ -47,6 +58,7 @@ public class Photo {
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "event_id", nullable = false, updatable = false)
+  @JsonIgnore
   private Event event;
 
   /**
@@ -100,6 +112,10 @@ public class Photo {
   @NonNull
   @Column(nullable = false, updatable = false)
   private String contentType;
+
+  @NonNull
+  @Column(nullable = false, updatable = false)
+  private String name;
 
   /**
    * Gets the Photo id
@@ -213,4 +229,40 @@ public class Photo {
   public void setContentType(@NonNull String contentType) {
     this.contentType = contentType;
   }
+
+  @NonNull
+  public String getName() {
+    return name;
+  }
+
+  public void setName(@NonNull String name) {
+    this.name = name;
+  }
+
+  /////////////////////////////////////
+  //get hrefs
+  /**
+   * Returns the location of REST resource representation of this image.
+   */
+  public URI getHref() {
+    //noinspection ConstantConditions
+    return (id != null) ? entityLinks.linkFor(Photo.class, getEvent().getId()).slash(id).toUri() : null;
+  }
+
+  @PostConstruct
+  private void initHateoas() {
+    //noinspection ResultOfMethodCallIgnored
+    entityLinks.toString();
+  }
+
+  /**
+   * Injects the {@link EntityLinks} required for constructing the REST resource location of an
+   * image.
+   */
+  @Autowired
+  public void setEntityLinks(
+      @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") EntityLinks entityLinks) {
+    Photo.entityLinks = entityLinks;
+  }
+
 }

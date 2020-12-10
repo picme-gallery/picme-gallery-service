@@ -7,7 +7,6 @@ import edu.cnm.deepdive.picmegallery.service.EventService;
 import edu.cnm.deepdive.picmegallery.service.EventService.EventNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -71,7 +70,7 @@ public class EventController {
    * @param passkey is the associated passkey.
    * @return access to the specified Event in the PicMeDatabase.
    */
-  @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Passkey")
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, headers = "Passkey")
   public Event get(@PathVariable long id,
       @RequestHeader(value = "Passkey", required = true) String passkey, Authentication auth) {
     return eventService.get(id, passkey)
@@ -94,7 +93,7 @@ public class EventController {
    * @param auth the authentication object
    * @return the event for the creator.
    */
-  @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE, headers = "Creator")
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, headers = "Creator")
   public Event getEvent(@PathVariable long id, Authentication auth) {
     return eventService.get(id, (User) auth.getPrincipal())
         .orElseThrow(EventNotFoundException::new);
