@@ -131,12 +131,17 @@ public class PhotoService {
    *                                             whitelist.
    */
   public Photo store(
-      @NonNull MultipartFile file, @NonNull User user) throws IOException, HttpMediaTypeNotAcceptableException {
+      @NonNull MultipartFile file, @NonNull User user, @NonNull Event event, Double latitude, Double longitude, String caption)
+      throws IOException, HttpMediaTypeNotAcceptableException {
     String originalFilename = file.getOriginalFilename();
     String contentType = file.getContentType();
     String reference = storageService.store(file);
     Photo photo = new Photo();
     photo.setUser(user);
+    photo.setEvent(event);
+    photo.setLatitude(latitude);
+    photo.setLongitude(longitude);
+    photo.setCaption(caption);
     photo.setName((originalFilename != null) ? originalFilename : UNTITLED_FILENAME);
     photo.setContentType(
         (contentType != null) ? contentType : MediaType.APPLICATION_OCTET_STREAM_VALUE);

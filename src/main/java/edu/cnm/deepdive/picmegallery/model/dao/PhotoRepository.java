@@ -40,7 +40,7 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
   List<Photo> findPhotosByEvent(Event event);
 
   //////////////////////////////making it like Nick/////////////////////////////////////////////
-  List<Photo> findPhotosByEventAndOrderByUploadedDesc(Event event);
+  List<Photo> findPhotosByEventOrderByUploadedDesc(Event event);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
   // Nick's methods from the Image repository
 
